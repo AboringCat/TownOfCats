@@ -3,7 +3,9 @@
 
 <br>
 
+<img align="left" alt="Cover" src="Resources/Images/LanguageChoose.png" width="50%" height="250" />
 
+<p align="right">
 
 > ### What language do u speak?
 >
