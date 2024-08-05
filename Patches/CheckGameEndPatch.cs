@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
+using EHR.AddOns.Common;
 using EHR.AddOns.GhostRoles;
 using EHR.Crewmate;
 using EHR.Impostor;
@@ -55,24 +56,26 @@ class GameEndChecker
 
             Main.AllPlayerControls.Do(pc => Camouflage.RpcSetSkin(pc, ForceRevert: true, RevertToDefault: true, GameEnd: true));
 
-            if (reason == GameOverReason.ImpostorBySabotage && (CustomRoles.Jackal.RoleExist() || CustomRoles.Sidekick.RoleExist()) && Jackal.CanWinBySabotageWhenNoImpAlive.GetBool() && !Main.AllAlivePlayerControls.Any(x => x.GetCustomRole().IsImpostorTeam()))
+            if (reason == GameOverReason.ImpostorBySabotage && Options.NKWinsBySabotageIfNoImpAlive.GetBool() && !Main.AllAlivePlayerControls.Any(x => x.IsImpostor()) && Main.AllAlivePlayerControls.Count(x => x.IsNeutralKiller()) == 1)
             {
-                reason = GameOverReason.ImpostorByKill;
-                WinnerIds.Clear();
-                ResetAndSetWinner(CustomWinner.Jackal);
-                WinnerRoles.Add(CustomRoles.Jackal);
+                var winner = Main.AllAlivePlayerControls.First(x => x.IsNeutralKiller());
+                var winnerRole = winner.GetCustomRole();
+
+                ResetAndSetWinner((CustomWinner)winnerRole);
+                WinnerRoles.Add(winnerRole);
+                WinnerIds.Add(winner.PlayerId);
             }
 
             switch (WinnerTeam)
             {
                 case CustomWinner.Crewmate:
                     WinnerIds.UnionWith(Main.AllPlayerControls
-                        .Where(pc => (pc.Is(CustomRoleTypes.Crewmate) || (pc.Is(CustomRoles.Haunter) && Haunter.CanWinWithCrew(pc))) && !pc.IsMadmate() && !pc.GetCustomSubRoles().Any(x => x.IsConverted()) && !pc.Is(CustomRoles.EvilSpirit))
+                        .Where(pc => (pc.Is(CustomRoleTypes.Crewmate) || (pc.Is(CustomRoles.Haunter) && Haunter.CanWinWithCrew(pc))) && !pc.IsMadmate() && !pc.IsConverted() && !pc.Is(CustomRoles.EvilSpirit))
                         .Select(pc => pc.PlayerId));
                     break;
                 case CustomWinner.Impostor:
                     WinnerIds.UnionWith(Main.AllPlayerControls
-                        .Where(pc => ((pc.Is(CustomRoleTypes.Impostor) && (!pc.Is(CustomRoles.DeadlyQuota) || Main.PlayerStates.Count(x => x.Value.GetRealKiller() == pc.PlayerId) >= Options.DQNumOfKillsNeeded.GetInt())) || pc.IsMadmate()) && !pc.GetCustomSubRoles().Any(x => x.IsConverted()) && !pc.Is(CustomRoles.EvilSpirit))
+                        .Where(pc => ((pc.Is(CustomRoleTypes.Impostor) && (!pc.Is(CustomRoles.DeadlyQuota) || Main.PlayerStates.Count(x => x.Value.GetRealKiller() == pc.PlayerId) >= Options.DQNumOfKillsNeeded.GetInt())) || pc.IsMadmate()) && !pc.IsConverted() && !pc.Is(CustomRoles.EvilSpirit))
                         .Select(pc => pc.PlayerId));
                     break;
                 case CustomWinner.Succubus:
@@ -186,7 +189,7 @@ class GameEndChecker
                             WinnerIds.Add(pc.PlayerId);
                             AdditionalWinnerTeams.Add(AdditionalWinners.SchrodingersCat);
                             break;
-                        case CustomRoles.SchrodingersCat:
+                        case CustomRoles.SchrodingersCat when !pc.IsConverted():
                             WinnerIds.Remove(pc.PlayerId);
                             break;
                     }
@@ -208,14 +211,9 @@ class GameEndChecker
                         case 1 when imps.All(x => x.Is(CustomRoles.Egoist)):
                             var pc = imps[0];
                             reason = GameOverReason.ImpostorByKill;
-                            ResetAndSetWinner(CustomWinner.Egoist);
+                            WinnerTeam = CustomWinner.Egoist;
+                            WinnerIds.RemoveWhere(x => Main.PlayerStates[x].MainRole.IsImpostor() || x.GetPlayer().IsMadmate());
                             WinnerIds.Add(pc.PlayerId);
-                            if (Romantic.RomanticId == pc.PlayerId && Romantic.HasPickedPartner)
-                            {
-                                AdditionalWinnerTeams.Add(AdditionalWinners.Romantic);
-                                WinnerIds.Add(Romantic.PartnerId);
-                            }
-
                             break;
                     }
                 }
@@ -388,7 +386,7 @@ class GameEndChecker
 
             if (CustomTeamManager.CheckCustomTeamGameEnd()) return true;
 
-            if (Main.AllAlivePlayerControls.All(x => Main.LoversPlayers.Any(l => l.PlayerId == x.PlayerId)) && !Main.LoversPlayers.All(x => x.Is(Team.Crewmate)))
+            if (Main.AllAlivePlayerControls.All(x => Main.LoversPlayers.Any(l => l.PlayerId == x.PlayerId)) && (!Main.LoversPlayers.All(x => x.Is(Team.Crewmate)) || !Lovers.CrewLoversWinWithCrew.GetBool()))
             {
                 ResetAndSetWinner(CustomWinner.Lovers);
                 return true;
@@ -421,10 +419,8 @@ class GameEndChecker
                 {
                     if (!x.Is(CustomRoles.DualPersonality)) continue;
 
-                    CustomRoles role = x.GetCustomRole();
-
-                    if (role.Is(Team.Crewmate)) Crew++;
-                    if (role.Is(Team.Impostor)) Imp++;
+                    if (x.Is(Team.Impostor)) Imp++;
+                    else if (x.Is(Team.Crewmate)) Crew++;
 
                     if (x.Is(CustomRoles.Charmed)) roleCounts[(null, CustomWinner.Succubus)]++;
                     if (x.Is(CustomRoles.Undead)) roleCounts[(null, CustomWinner.Necromancer)]++;

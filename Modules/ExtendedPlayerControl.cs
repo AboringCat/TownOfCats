@@ -729,7 +729,6 @@ static class ExtendedPlayerControl
     public static bool CanUseSabotage(this PlayerControl pc)
     {
         if (!pc.IsAlive() || pc.Data.Role.Role == RoleTypes.GuardianAngel) return false;
-
         return Main.PlayerStates.TryGetValue(pc.PlayerId, out var state) && state.Role.CanUseSabotage(pc);
     }
 
@@ -970,9 +969,8 @@ static class ExtendedPlayerControl
     }
 
     public static bool IsNeutralKiller(this PlayerControl player) => player.Is(CustomRoles.Bloodlust) || player.GetCustomRole().IsNK();
-    public static bool IsNeutralBenign(this PlayerControl player) => player.GetCustomRole().IsNB();
-    public static bool IsNeutralEvil(this PlayerControl player) => player.GetCustomRole().IsNE();
-    public static bool IsNeutralChaos(this PlayerControl player) => player.GetCustomRole().IsNC();
+    public static bool IsNeutralBenign(this PlayerControl player) => player.GetCustomRole().GetNeutralRoleCategory() == RoleOptionType.Neutral_Benign;
+    public static bool IsNeutralEvil(this PlayerControl player) => player.GetCustomRole().GetNeutralRoleCategory() == RoleOptionType.Neutral_Evil;
     public static bool IsSnitchTarget(this PlayerControl player) => player.Is(CustomRoles.Bloodlust) || player.GetCustomRole().IsSnitchTarget();
     public static bool IsMadmate(this PlayerControl player) => player.Is(CustomRoles.Madmate) || player.GetCustomRole().IsMadmate();
 
@@ -1059,7 +1057,7 @@ static class ExtendedPlayerControl
 
     public static bool Is(this PlayerControl target, Team team) => team switch
     {
-        Team.Impostor => target.GetCustomRole().IsImpostorTeamV2() && !target.Is(CustomRoles.Bloodlust),
+        Team.Impostor => (target.IsMadmate() || target.GetCustomRole().IsImpostorTeamV2()) && !target.Is(CustomRoles.Bloodlust),
         Team.Neutral => target.GetCustomRole().IsNeutralTeamV2() || target.Is(CustomRoles.Bloodlust),
         Team.Crewmate => target.GetCustomRole().IsCrewmateTeamV2(),
         Team.None => target.Is(CustomRoles.GM) || target.Is(CountTypes.None) || target.Is(CountTypes.OutOfGame),
@@ -1076,6 +1074,8 @@ static class ExtendedPlayerControl
         if (role.IsNeutralTeamV2()) return Team.Neutral;
         return role.IsCrewmateTeamV2() ? Team.Crewmate : Team.None;
     }
+
+    public static bool IsConverted(this PlayerControl target) => target.GetCustomSubRoles().Any(x => x.IsConverted());
 
     public static bool IsAlive(this PlayerControl target)
     {

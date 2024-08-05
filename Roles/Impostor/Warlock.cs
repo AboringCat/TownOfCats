@@ -33,7 +33,7 @@ namespace EHR.Impostor
         private long LastNotify;
         public override bool IsEnable => On;
 
-        public static void SetupCustomOption()
+        public override void SetupCustomOption()
         {
             SetupRoleOptions(4600, TabGroup.ImpostorRoles, CustomRoles.Warlock);
             WarlockCanKillAllies = new BooleanOptionItem(4610, "CanKillAllies", true, TabGroup.ImpostorRoles)
@@ -278,9 +278,10 @@ namespace EHR.Impostor
             if (KCD > 0f) KCD -= Time.fixedDeltaTime;
             if (CurseCD > 0f) CurseCD -= Time.fixedDeltaTime;
 
-            if (!pc.IsModClient() && (Math.Abs(KCD - beforeKCD) > 0.5f || Math.Abs(beforeCCD - CurseCD) > 0.5f) && LastNotify != Utils.TimeStamp)
+            var now = Utils.TimeStamp;
+            if ((Math.Abs(KCD - beforeKCD) > 0.01f || Math.Abs(beforeCCD - CurseCD) > 0.01f) && LastNotify != now)
             {
-                LastNotify = Utils.TimeStamp;
+                LastNotify = now;
                 Utils.NotifyRoles(SpecifySeer: pc, SpecifyTarget: pc);
             }
         }

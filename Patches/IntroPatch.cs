@@ -18,7 +18,7 @@ class SetUpRoleTextPatch
     {
         // After showing team for non-modded clients, update player names.
         IsInIntro = false;
-        Utils.DoNotifyRoles(NoCache: true);
+        _ = Utils.DoNotifyRoles(NoCache: true);
 
         var lp = PlayerControl.LocalPlayer;
 
@@ -269,6 +269,10 @@ class BeginCrewmatePatch
             byte otherLoverId = Main.LoversPlayers.First(x => x.PlayerId != PlayerControl.LocalPlayer.PlayerId).PlayerId;
             __instance.ImpostorText.gameObject.SetActive(true);
             __instance.ImpostorText.text = string.Format(GetString($"SubText.{role}"), Utils.ColorString(Main.PlayerColors.TryGetValue(otherLoverId, out var color) ? color : Color.white, Main.AllPlayerNames[otherLoverId]));
+        }
+        else if (PlayerControl.LocalPlayer.Is(CustomRoles.Lovers))
+        {
+            __instance.TeamTitle.color = __instance.BackgroundBar.material.color = Utils.GetRoleColor(CustomRoles.Lovers);
         }
         else
         {
@@ -763,7 +767,7 @@ class IntroCutsceneDestroyPatch
                 {
                     foreach (var pc in Main.AllAlivePlayerControls)
                     {
-                        if (pc.GetCustomRole().SimpleAbilityTrigger() && (!pc.IsNeutralKiller() || Options.UseUnshiftTriggerForNKs.GetBool()))
+                        if (pc.GetCustomRole().SimpleAbilityTrigger() && Options.UseUnshiftTrigger.GetBool() && (!pc.IsNeutralKiller() || Options.UseUnshiftTriggerForNKs.GetBool()))
                         {
                             var target = Main.AllAlivePlayerControls.Without(pc).RandomElement();
                             var outfit = pc.Data.DefaultOutfit;
@@ -800,11 +804,13 @@ class IntroCutsceneDestroyPatch
             {
                 PlayerControl.LocalPlayer.Data.Role.AffectedByLightAffectors = false;
             }
-        }
 
-        if (AFKDetector.ActivateOnStart.GetBool())
-        {
-            LateTask.New(() => Main.AllAlivePlayerControls.Do(AFKDetector.RecordPosition), 1f, log: false);
+            if (AFKDetector.ActivateOnStart.GetBool())
+            {
+                LateTask.New(() => Main.AllAlivePlayerControls.Do(AFKDetector.RecordPosition), 1f, log: false);
+            }
+
+            LateTask.New(() => Utils.NotifyRoles(NoCache: true), 3f, log: false);
         }
 
         Logger.Info("OnDestroy", "IntroCutscene");

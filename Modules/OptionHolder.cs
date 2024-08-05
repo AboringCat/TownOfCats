@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using EHR.AddOns;
+using EHR.AddOns.GhostRoles;
 using EHR.Modules;
 using HarmonyLib;
 using UnityEngine;
@@ -207,6 +208,7 @@ public static class Options
     public static OptionItem NeutralKillingRolesMaxPlayer;
     public static OptionItem NeutralRoleWinTogether;
     public static OptionItem NeutralWinTogether;
+    public static OptionItem NeutralsKnowEachOther;
 
     public static OptionItem DefaultShapeshiftCooldown;
     public static OptionItem DeadImpCantSabotage;
@@ -541,6 +543,7 @@ public static class Options
     public static OptionItem DisableAirshipViewingDeckLightsPanel;
     public static OptionItem DisableAirshipGapRoomLightsPanel;
     public static OptionItem DisableAirshipCargoLightsPanel;
+    public static OptionItem NKWinsBySabotageIfNoImpAlive;
 
     // Guesser Mode
     public static OptionItem GuesserMode;
@@ -975,6 +978,8 @@ public static class Options
         NeutralWinTogether = new BooleanOptionItem(209, "NeutralWinTogether", false, TabGroup.NeutralRoles)
             .SetParent(NeutralRoleWinTogether)
             .SetGameMode(CustomGameMode.Standard);
+        NeutralsKnowEachOther = new BooleanOptionItem(212, "NeutralsKnowEachOther", false, TabGroup.NeutralRoles)
+            .SetGameMode(CustomGameMode.Standard);
 
         NameDisplayAddons = new BooleanOptionItem(210, "NameDisplayAddons", true, TabGroup.Addons)
             .SetGameMode(CustomGameMode.Standard)
@@ -1057,18 +1062,19 @@ public static class Options
                 x.SetupCustomOption();
             });
 
-        var IType = typeof(ISettingHolder);
-        Dictionary<SimpleRoleOptionType, ISettingHolder[]> simpleRoleClasses = Assembly
+        var IType = typeof(IGhostRole);
+        Assembly
             .GetExecutingAssembly()
             .GetTypes()
             .Where(t => IType.IsAssignableFrom(t) && !t.IsInterface)
             .OrderBy(t => Translator.GetString(t.Name))
-            .GroupBy(x => ((CustomRoles)Enum.Parse(typeof(CustomRoles), ignoreCase: true, value: x.Name)).GetSimpleRoleOptionType())
-            .ToDictionary(x => x.Key, x => x.Select(type => (ISettingHolder)Activator.CreateInstance(type)).ToArray());
+            .Select(type => (IGhostRole)Activator.CreateInstance(type))
+            .Do(x => x.SetupCustomOption());
 
         Dictionary<RoleOptionType, RoleBase[]> roleClassesDict = Main.AllRoleClasses
             .Where(x => x.GetType().Name != "VanillaRole")
             .GroupBy(x => ((CustomRoles)Enum.Parse(typeof(CustomRoles), ignoreCase: true, value: x.GetType().Name)).GetRoleOptionType())
+            .OrderBy(x => (int)x.Key)
             .ToDictionary(x => x.Key, x => x.ToArray());
 
         foreach (var roleClasses in roleClassesDict)
@@ -1079,32 +1085,6 @@ public static class Options
 
             var tab = roleClasses.Key.GetTabFromOptionType();
 
-            var key = roleClasses.Key.GetSimpleRoleOptionType();
-            if (simpleRoleClasses.TryGetValue(key, out ISettingHolder[] value) && value.Length > 0)
-            {
-                var categorySuffix = roleClasses.Key switch
-                {
-                    RoleOptionType.Neutral_Killing => "NK",
-                    RoleOptionType.Neutral_NonKilling => "NNK",
-                    _ => string.Empty
-                };
-                new TextOptionItem(titleId, $"ROT.Basic{categorySuffix}", tab)
-                    .SetGameMode(CustomGameMode.Standard)
-                    .SetColor(Color.gray)
-                    .SetHeader(true);
-                titleId += 10;
-
-                foreach (ISettingHolder holder in value)
-                {
-                    RoleLoadingText = $"(Simple {key}) {holder.GetType().Name} (total: {value.Length})";
-                    Log();
-
-                    holder.SetupCustomOption();
-                }
-
-                simpleRoleClasses.Remove(key);
-            }
-
             new TextOptionItem(titleId, $"ROT.{roleClasses.Key}", tab)
                 .SetHeader(true)
                 .SetGameMode(CustomGameMode.Standard)
@@ -1114,12 +1094,11 @@ public static class Options
             foreach (var roleClass in roleClasses.Value)
             {
                 index++;
-                var type = roleClass.GetType();
-                RoleLoadingText = $"{index}/{allRoles} ({type.Name})";
+                RoleLoadingText = $"{index}/{allRoles} ({roleClass.GetType().Name})";
                 Log();
                 try
                 {
-                    type.GetMethod("SetupCustomOption")?.Invoke(roleClass, null);
+                    roleClass.SetupCustomOption();
                 }
                 catch (Exception e)
                 {
@@ -1129,7 +1108,7 @@ public static class Options
                 yield return null;
             }
 
-            if (roleClasses.Key == RoleOptionType.Impostor)
+            if (roleClasses.Key == RoleOptionType.Impostor_Miscellaneous)
             {
                 new TextOptionItem(titleId, "ROT.MadMates", TabGroup.ImpostorRoles)
                     .SetHeader(true)
@@ -1519,6 +1498,10 @@ public static class Options
             .SetGameMode(CustomGameMode.Standard);
         DisableAirshipCargoLightsPanel = new BooleanOptionItem(22512, "DisableAirshipCargoLightsPanel", false, TabGroup.GameSettings)
             .SetParent(LightsOutSpecialSettings)
+            .SetGameMode(CustomGameMode.Standard);
+
+        NKWinsBySabotageIfNoImpAlive = new BooleanOptionItem(22520, "NKWinsBySabotageIfNoImpAlive", false, TabGroup.GameSettings)
+            .SetColor(new Color32(243, 96, 96, byte.MaxValue))
             .SetGameMode(CustomGameMode.Standard);
 
         LoadingPercentage = 73;
@@ -2033,6 +2016,7 @@ public static class Options
         foreach (var s in Enum.GetValues<GameStateInfo>())
         {
             GameStateSettings[s] = new BooleanOptionItem(44429 + i, $"GameStateCommand.Show{s}", true, TabGroup.GameSettings)
+                .SetGameMode(CustomGameMode.Standard)
                 .SetParent(EnableKillerLeftCommand)
                 .SetColor(new Color32(147, 241, 240, byte.MaxValue));
             i++;
@@ -2040,6 +2024,7 @@ public static class Options
 
         MinPlayersForGameStateCommand = new IntegerOptionItem(44438, "MinPlayersForGameStateCommand", new(1, 15, 1), 1, TabGroup.GameSettings)
             .SetParent(EnableKillerLeftCommand)
+            .SetGameMode(CustomGameMode.Standard)
             .SetValueFormat(OptionFormat.Players)
             .SetColor(new Color32(147, 241, 240, byte.MaxValue));
 

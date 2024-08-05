@@ -136,6 +136,8 @@ public enum CustomRoles
     Benefactor,
     Bodyguard,
     CameraMan,
+    Car,
+    Catcher,
     CyberStar, // Celebrity
     Chameleon,
     Chef,
@@ -147,6 +149,7 @@ public enum CustomRoles
     LovingCrewmate,
     LovingImpostor,
     Crusader,
+    Dad,
     Demolitionist,
     Deputy,
     Detective,

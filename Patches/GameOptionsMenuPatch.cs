@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
+using EHR.Modules;
 using EHR.Patches;
 using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
@@ -598,11 +599,13 @@ public static class StringOptionPatch
             var name = item.GetName();
             item.OptionBehaviour = __instance;
             string name1 = name;
-            if (Enum.GetValues<CustomRoles>().Find(x => Translator.GetString($"{x}") == name1.RemoveHtmlTags(), out var role))
+            if (Enum.GetValues<CustomRoles>().FindFirst(x => Translator.GetString($"{x}") == name1.RemoveHtmlTags(), out var role))
             {
+                if (role.ToString().Contains("GuardianAngel")) role = CustomRoles.GA;
                 name = name.RemoveHtmlTags();
                 if (Options.UsePets.GetBool() && role.PetActivatedAbility()) name += Translator.GetString("SupportsPetIndicator");
                 if (!Options.UsePets.GetBool() && role.OnlySpawnsWithPets()) name += Translator.GetString("RequiresPetIndicator");
+                if (role.IsGhostRole()) name += GetGhostRoleTeam(role);
                 __instance.TitleText.fontWeight = FontWeight.Black;
                 __instance.TitleText.outlineColor = new(255, 255, 255, 255);
                 __instance.TitleText.outlineWidth = 0.04f;
@@ -633,6 +636,25 @@ public static class StringOptionPatch
         icon.SetAsLastSibling();
     }
 
+    private static string GetGhostRoleTeam(CustomRoles role)
+    {
+        var instance = GhostRolesManager.CreateGhostRoleInstance(role);
+        if (instance == null) return string.Empty;
+        var team = instance.Team;
+        if ((int)team is 1 or 2 or 4) return $"    <size=2>{GetColoredShortTeamName(team)}</size>";
+        Team[] teams = (int)team switch
+        {
+            3 => [Team.Impostor, Team.Neutral],
+            5 => [Team.Impostor, Team.Crewmate],
+            6 => [Team.Neutral, Team.Crewmate],
+            7 => [Team.Impostor, Team.Neutral, Team.Crewmate],
+            _ => []
+        };
+        return $"    <size=2>{string.Join('/', teams.Select(GetColoredShortTeamName))}</size>";
+
+        string GetColoredShortTeamName(Team t) => Utils.ColorString(t.GetTeamColor(), Translator.GetString($"ShortTeamName.{t}").ToUpper());
+    }
+
     [HarmonyPatch(nameof(StringOption.UpdateValue)), HarmonyPrefix]
     private static bool UpdateValuePrefix(StringOption __instance)
     {
@@ -644,7 +666,7 @@ public static class StringOptionPatch
 
             var name = item.GetName();
             string name1 = name;
-            if (Enum.GetValues<CustomRoles>().Find(x => Translator.GetString($"{x}") == name1.RemoveHtmlTags(), out var role))
+            if (Enum.GetValues<CustomRoles>().FindFirst(x => Translator.GetString($"{x}") == name1.RemoveHtmlTags(), out var role))
             {
                 name = name.RemoveHtmlTags();
                 if (Options.UsePets.GetBool() && role.PetActivatedAbility()) name += Translator.GetString("SupportsPetIndicator");
@@ -709,7 +731,7 @@ public static class StringOptionPatch
         {
             var item = OptionItem.AllOptions[index];
             var name = item.GetName();
-            if (Enum.GetValues<CustomRoles>().Find(x => Translator.GetString($"{x}") == name.RemoveHtmlTags(), out var role))
+            if (Enum.GetValues<CustomRoles>().FindFirst(x => Translator.GetString($"{x}") == name.RemoveHtmlTags(), out var role))
             {
                 var roleName = role.IsVanilla() ? role + "EHR" : role.ToString();
                 var str = Translator.GetString($"{roleName}InfoLong");
@@ -809,10 +831,6 @@ public class GameSettingMenuPatch
 
             ModSettingsButtons.Add(tab, button);
         }
-
-        ModGameOptionsMenu.OptionList = new();
-        ModGameOptionsMenu.BehaviourList = new();
-        ModGameOptionsMenu.CategoryHeaderList = new();
 
         ModSettingsTabs = [];
         foreach (var tab in Enum.GetValues<TabGroup>())
@@ -917,10 +935,10 @@ public class GameSettingMenuPatch
         GameSettingsLabel.text = Translator.GetString($"Mode{Options.CurrentGameMode}").Split(':').Last().TrimStart(' ');
         if (IsRussian)
         {
-            
             GameSettingsLabel.transform.localScale = new(0.7f, 0.7f, 1f);
             GameSettingsLabel.transform.localPosition = new Vector3(-3.77f, 1.62f, -4);
         }
+
         var GameSettingsLabelPos = GameSettingsLabel.transform.localPosition;
 
         var gmCycler = Object.Instantiate(GMinus, GameSettingsLabel.transform, true);
@@ -951,7 +969,7 @@ public class GameSettingMenuPatch
         var FreeChatField = DestroyableSingleton<ChatController>.Instance.freeChatField;
         var TextField = Object.Instantiate(FreeChatField, ParentLeftPanel.parent);
         TextField.transform.localScale = new(0.3f, 0.59f, 1);
-        TextField.transform.localPosition = new(-0.8f, -2.57f, -5f);
+        TextField.transform.localPosition = new(-0.7f, -2.5f, -5f);
         TextField.textArea.outputText.transform.localScale = new(3.5f, 2f, 1f);
         TextField.textArea.outputText.font = PLuLabel.font;
 
@@ -1126,6 +1144,10 @@ public class GameSettingMenuPatch
         }
 
         SetDefaultButton(__instance);
+
+        ModGameOptionsMenu.OptionList = new();
+        ModGameOptionsMenu.BehaviourList = new();
+        ModGameOptionsMenu.CategoryHeaderList = new();
 
         ControllerManager.Instance.OpenOverlayMenu(__instance.name, __instance.BackButton, __instance.DefaultButtonSelected, __instance.ControllerSelectable);
         DestroyableSingleton<HudManager>.Instance.menuNavigationPrompts.SetActive(false);

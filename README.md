@@ -151,6 +151,22 @@
 | Vigilante         |                 |                   |                |
 | Witness           |                 |                   |                |
 
+## VIP and Moderator perks
+
+:heavy_check_mark:   Can always use the command<br>
+:x:   Can never use the command<br>
+:question:    Host setting determines<br>
+
+| Feature   | Regular Players | VIP                | Moderator          | Host               |
+|-----------|-----------------|--------------------|--------------------|--------------------|
+| /color    | :question:      | :heavy_check_mark: | :question:         | :heavy_check_mark: |
+| /rename   | :question:      | :heavy_check_mark: | :question:         | :heavy_check_mark: |
+| /kick     | :x:             | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| /ban      | :x:             | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| /say      | :x:             | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| /poll     | :x:             | :x:                | :heavy_check_mark: | :heavy_check_mark: |
+| Lobby tag | :x:             | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+
 ## Main Features
 
 - Note: The goal with this branch is to improve the existing stuff over adding new roles. If some of the stuff you see
@@ -389,8 +405,8 @@
 - Dx (PT-BR)
 - PH_Gaming (PT-BR)
 - Tomix (PT-BR)
-- aviiiv (PT-BR)
 - HyperAtill (RU)
+- ABoringCat (ZH-CN)
 
 # License for the Custom Team Assigner application
 

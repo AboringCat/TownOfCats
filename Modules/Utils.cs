@@ -8,7 +8,6 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using AmongUs.Data;
 using AmongUs.GameOptions;
 using EHR.AddOns.Common;
@@ -452,6 +451,8 @@ public static class Utils
         string RoleText = GetRoleName(isHnsAgentOverride ? CustomRoles.Hider : targetMainRole);
         Color RoleColor = GetRoleColor(loversShowDifferentRole ? CustomRoles.Impostor : targetMainRole);
 
+        if (seerMainRole == CustomRoles.LovingImpostor && self) RoleColor = GetRoleColor(CustomRoles.LovingImpostor);
+
         if (LastImpostor.currentId == targetId)
             RoleText = GetRoleString("Last-") + RoleText;
 
@@ -747,6 +748,7 @@ public static class Utils
             case CustomRoles.Doomsayer:
                 hasTasks = false;
                 break;
+            case CustomRoles.Dad when ((Dad)States.Role).DoneTasks:
             case CustomRoles.Workaholic:
             case CustomRoles.Terrorist:
             case CustomRoles.Sunnyboy:
@@ -786,15 +788,16 @@ public static class Utils
                 case CustomRoles.Bloodlust:
                     hasTasks = false;
                     break;
-                default:
-                    if (subRole.IsGhostRole()) hasTasks = true;
+                case CustomRoles.Specter:
+                case CustomRoles.Haunter:
+                    hasTasks = !ForRecompute;
                     break;
             }
         }
 
         if (CopyCat.Instances.Any(x => x.CopyCatPC.PlayerId == p.PlayerId) && ForRecompute && (!Options.UsePets.GetBool() || CopyCat.UsePet.GetBool())) hasTasks = false;
 
-        hasTasks |= role.UsesPetInsteadOfKill();
+        hasTasks |= role.UsesPetInsteadOfKill() && role is not (CustomRoles.Refugee or CustomRoles.Necromancer or CustomRoles.Deathknight);
 
         return hasTasks;
     }
@@ -1225,6 +1228,7 @@ public static class Utils
                 case "DisableAirshipDevices" when Main.CurrentMap != MapNames.Airship:
                 case "PolusReactorTimeLimit" when Main.CurrentMap != MapNames.Polus:
                 case "AirshipReactorTimeLimit" when Main.CurrentMap != MapNames.Airship:
+                case "ImpCanBeRole" or "CrewCanBeRole" or "NeutralCanBeRole":
                     continue;
             }
 
@@ -1775,7 +1779,9 @@ public static class Utils
         return add;
     }
 
-    public static string ColoredPlayerName(this byte id) => ColorString(Main.PlayerColors.GetValueOrDefault(id, Color.white), Main.AllPlayerNames.GetValueOrDefault(id, $"Someone (ID {id})"));
+    public static string ColoredPlayerName(this byte id) => ColorString(Main.PlayerColors.GetValueOrDefault(id, Color.white), Main.AllPlayerNames.GetValueOrDefault(id, GetPlayerById(id)?.GetRealName() ?? $"Someone (ID {id})"));
+
+    public static PlayerControl GetPlayer(this byte id) => GetPlayerById(id);
 
     public static PlayerControl GetPlayerById(int PlayerId, bool fast = true)
     {
@@ -1793,29 +1799,29 @@ public static class Utils
 
         if (!SetUpRoleTextPatch.IsInIntro && ((SpecifySeer != null && SpecifySeer.IsModClient()) || !AmongUsClient.Instance.AmHost || Main.AllPlayerControls == null || (GameStates.IsMeeting && !isForMeeting) || GameStates.IsLobby)) return;
 
-        DoNotifyRoles(isForMeeting, SpecifySeer, SpecifyTarget, NoCache, ForceLoop, CamouflageIsForMeeting, GuesserIsForMeeting, MushroomMixup);
+        if (SetUpRoleTextPatch.IsInIntro || isForMeeting || CamouflageIsForMeeting || GuesserIsForMeeting || MushroomMixup) _ = DoNotifyRoles(isForMeeting, SpecifySeer, SpecifyTarget, NoCache, ForceLoop, CamouflageIsForMeeting, GuesserIsForMeeting, MushroomMixup);
+        else Main.Instance.StartCoroutine(DoNotifyRoles(false, SpecifySeer, SpecifyTarget, NoCache, ForceLoop));
     }
 
-    public static Task DoNotifyRoles(bool isForMeeting = false, PlayerControl SpecifySeer = null, PlayerControl SpecifyTarget = null, bool NoCache = false, bool ForceLoop = false, bool CamouflageIsForMeeting = false, bool GuesserIsForMeeting = false, bool MushroomMixup = false)
+    public static System.Collections.IEnumerator DoNotifyRoles(bool isForMeeting = false, PlayerControl SpecifySeer = null, PlayerControl SpecifyTarget = null, bool NoCache = false, bool ForceLoop = false, bool CamouflageIsForMeeting = false, bool GuesserIsForMeeting = false, bool MushroomMixup = false)
     {
-        //var caller = new System.Diagnostics.StackFrame(1, false);
-        //var callerMethod = caller.GetMethod();
-        //string callerMethodName = callerMethod.Name;
-        //string callerClassName = callerMethod.DeclaringType.FullName;
-        //Logger.Info("NotifyRoles was called from " + callerClassName + "." + callerMethodName, "NotifyRoles");
+        PlayerControl[] seerList = SpecifySeer != null ? [SpecifySeer] : Main.AllPlayerControls;
+        PlayerControl[] targetList = SpecifyTarget != null ? [SpecifyTarget] : Main.AllPlayerControls;
 
-        PlayerControl[] seerList = SpecifySeer != null ? [SpecifySeer] : Main.AllPlayerControls.ToArray();
-        PlayerControl[] targetList = SpecifyTarget != null ? [SpecifyTarget] : Main.AllPlayerControls.ToArray();
-
-        Logger.Info($" Seers: {string.Join(", ", seerList.Select(x => x.GetRealName()))} ---- Targets: {string.Join(", ", targetList.Select(x => x.GetRealName()))}", "NR");
+        StringBuilder seerLogInfo = new();
+        StringBuilder targetLogInfo = new();
 
         // seer: Players who can see changes made here
         // target: Players subject to changes that seer can see
+        int i = 0;
+        bool instant = SetUpRoleTextPatch.IsInIntro || isForMeeting || CamouflageIsForMeeting || GuesserIsForMeeting || MushroomMixup;
         foreach (PlayerControl seer in seerList)
         {
             try
             {
                 if (seer == null || seer.Data.Disconnected || seer.IsModClient()) continue;
+
+                seerLogInfo.Append($"{seer.GetRealName()}, ");
 
                 // During intro scene, set team name for non-modded clients and skip the rest.
                 string SelfName;
@@ -1831,6 +1837,12 @@ public static class Utils
                     SelfName = $"{selfTeamName}\r\n<size=150%>{seerRole.ToColoredString()}</size>{roleNameUp}";
 
                     seer.RpcSetNamePrivate(SelfName, seer);
+                    continue;
+                }
+
+                if (seer.Is(CustomRoles.Car))
+                {
+                    seer.RpcSetNamePrivate(Car.Name, force: NoCache);
                     continue;
                 }
 
@@ -2025,11 +2037,18 @@ public static class Utils
                     foreach (PlayerControl target in targetList)
                     {
                         if (target.PlayerId == seer.PlayerId) continue;
-                        Logger.Info($"NotifyRoles-Loop2-{target.GetNameWithRole().RemoveHtmlTags()}:START", "NotifyRoles");
+
+                        targetLogInfo.Append($"{target.GetRealName()}, ");
+
+                        if (target.Is(CustomRoles.Car))
+                        {
+                            target.RpcSetNamePrivate(Car.Name, seer, force: NoCache);
+                            continue;
+                        }
 
                         if ((IsActive(SystemTypes.MushroomMixupSabotage) || MushroomMixup) && target.IsAlive() && !seer.Is(CustomRoleTypes.Impostor) && Main.ResetCamPlayerList.Contains(seer.PlayerId))
                         {
-                            seer.RpcSetNamePrivate("<size=0%>", force: NoCache);
+                            target.RpcSetNamePrivate("<size=0%>", force: NoCache);
                         }
                         else
                         {
@@ -2263,9 +2282,12 @@ public static class Utils
             {
                 Logger.Error($"Error for {seer.GetNameWithRole()}: {ex}", "NR");
             }
+
+            i++;
+            if (i % 3 == 0 && !instant) yield return null;
         }
 
-        return Task.CompletedTask;
+        Logger.Info($" Seers: {seerLogInfo.ToString().TrimEnd(',', ' ')} ---- Targets: {targetLogInfo.ToString().TrimEnd(',', ' ')}", "NR");
     }
 
     public static void MarkEveryoneDirtySettings()
@@ -2367,8 +2389,8 @@ public static class Utils
 
         // All possible results of RomanticState from the above code:
         // 0: Romantic doesn't exist
-        // 1: Romantic exists but hasn't picked a partner
-        // 2: Romantic exists and has picked a partner
+        // 1: Romantic exists but hasn't picked a partner (and is dead)
+        // 2: Romantic exists and has picked a partner (but both of them are dead)
         // 3: Romantic exists, is alive, but hasn't picked a partner
         // 6: Romantic exists, has picked a partner who is dead, but Romantic is alive
         // 8: Romantic exists, has picked a partner who is alive, but Romantic is dead
@@ -2412,6 +2434,7 @@ public static class Utils
             CustomRoles.Tornado => Tornado.TornadoCooldown.GetInt(),
             CustomRoles.Sentinel => Sentinel.PatrolCooldown.GetInt(),
             CustomRoles.Druid => Druid.VentCooldown.GetInt(),
+            CustomRoles.Catcher => Catcher.AbilityCooldown.GetInt(),
             CustomRoles.Sentry => EHR.Impostor.Sentry.ShowInfoCooldown.GetInt(),
             CustomRoles.ToiletMaster => ToiletMaster.AbilityCooldown.GetInt(),
             CustomRoles.Sniper => Options.DefaultShapeshiftCooldown.GetInt(),
@@ -2647,6 +2670,7 @@ public static class Utils
             Adventurer.OnAnyoneDead(target);
             Soothsayer.OnAnyoneDeath(target.GetRealKiller(), target);
             Amnesiac.OnAnyoneDeath(target);
+            Dad.OnAnyoneDeath(target);
             EHR.Impostor.Sentry.OnAnyoneMurder(target);
 
             if (QuizMaster.On) QuizMaster.Data.NumPlayersDeadThisRound++;

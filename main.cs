@@ -30,8 +30,8 @@ public class Main : BasePlugin
     private const string DebugKeyHash = "c0fd562955ba56af3ae20d7ec9e64c664f0facecef4b3e366e109306adeae29d";
     private const string DebugKeySalt = "59687b";
     private const string PluginGuid = "com.gurge44.endlesshostroles";
-    public const string PluginVersion = "4.3.0";
-    public const string PluginDisplayVersion = "4.3.0";
+    public const string PluginVersion = "4.4.0";
+    public const string PluginDisplayVersion = "4.4.0";
     public const string NeutralColor = "#ffab1b";
     public const string ImpostorColor = "#ff1919";
     public const string CrewmateColor = "#8cffff";
@@ -340,11 +340,13 @@ public class Main : BasePlugin
                 { CustomRoles.Electric, "#fbff00" },
                 { CustomRoles.Philantropist, "#e3b384" },
                 { CustomRoles.Tornado, "#303030" },
+                { CustomRoles.Dad, "#037bfc" },
                 { CustomRoles.Insight, "#26ff38" },
                 { CustomRoles.Tunneler, "#543232" },
                 { CustomRoles.Detour, "#ffd35c" },
                 { CustomRoles.Gaulois, "#42d1f5" },
                 { CustomRoles.Druid, "#ffb694" },
+                { CustomRoles.Catcher, "#aaf2cf" },
                 { CustomRoles.Autocrat, "#e2ed64" },
                 { CustomRoles.LovingCrewmate, "#ff9ace" },
                 { CustomRoles.LovingImpostor, "#ff9ace" },
@@ -355,6 +357,7 @@ public class Main : BasePlugin
                 { CustomRoles.Convener, "#34eb7a" },
                 { CustomRoles.Mathematician, "#eb3474" },
                 { CustomRoles.Transmitter, "#c9a11e" },
+                { CustomRoles.Car, "#6e6e6e" },
                 { CustomRoles.President, "#30916f" },
                 { CustomRoles.Oxyman, "#ffa58c" },
                 { CustomRoles.Rhapsode, "#f5ad42" },
@@ -726,6 +729,13 @@ public enum Team
     Impostor = 1,
     Neutral = 2,
     Crewmate = 4
+
+    /*
+     * Impostor | Neutral = 3
+     * Impostor | Crewmate = 5
+     * Neutral | Crewmate = 6
+     * Impostor | Neutral | Crewmate = 7
+     */
 }
 
 #pragma warning disable IDE0079 // Remove unnecessary suppression

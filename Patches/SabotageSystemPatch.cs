@@ -7,8 +7,8 @@ using UnityEngine;
 
 namespace EHR;
 
-//Based on:
-//https://github.com/Koke1024/Town-Of-Moss/blob/main/TownOfMoss/Patches/MeltDownBoost.cs
+// Based on:
+// https://github.com/Koke1024/Town-Of-Moss/blob/main/TownOfMoss/Patches/MeltDownBoost.cs
 
 [HarmonyPatch(typeof(ReactorSystemType), nameof(ReactorSystemType.Deteriorate))]
 public static class ReactorSystemTypePatch
@@ -335,6 +335,7 @@ public static class SabotageSystemTypeRepairDamagePatch
         }
 
         if (player.Is(Team.Impostor) && !player.IsAlive() && Options.DeadImpCantSabotage.GetBool()) return false;
+        if (!player.Is(Team.Impostor) && !player.IsAlive()) return false;
         bool allow = player.GetCustomRole() switch
         {
             CustomRoles.Jackal when Jackal.CanSabotage.GetBool() => true,
