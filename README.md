@@ -16,8 +16,8 @@
 </p>
 <p align="center">
 
-[I speak English](https://github.com/AboringCat/TownOfCats/blob/Dev-Unstable/Resources/READMEs/README-EN.md)
-[我说中文](https://github.com/AboringCat/TownOfCats/blob/Dev-Unstable/Resources/READMEs/README-CN.md)
+[I speak English](https://github.com/AboringCat/TownOfCats/blob/Dev-Unstable/Resources/READMEs/README-EN.md)  
+[我说中文](https://github.com/AboringCat/TownOfCats/blob/Dev-Unstable/Resources/READMEs/README-CN.md)  
 
 <br>
 
