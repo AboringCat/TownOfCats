@@ -2,9 +2,9 @@
 using System.Text;
 using AmongUs.GameOptions;
 using UnityEngine;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class TimeMaster : RoleBase
     {

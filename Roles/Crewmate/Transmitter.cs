@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Transmitter : RoleBase
     {

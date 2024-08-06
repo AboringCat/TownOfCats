@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 using UnityEngine;
-using static EHR.Options;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Options;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Tornado : RoleBase
     {

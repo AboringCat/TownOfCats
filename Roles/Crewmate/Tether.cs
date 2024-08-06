@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     using static Options;
 

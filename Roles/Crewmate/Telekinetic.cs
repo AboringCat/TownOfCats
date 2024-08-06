@@ -1,11 +1,11 @@
 ﻿using System;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
-using EHR.Patches;
+using TOC.Modules;
+using TOC.Neutral;
+using TOC.Patches;
 using Hazel;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Telekinetic : RoleBase
     {
