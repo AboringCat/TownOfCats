@@ -3,9 +3,9 @@ using System.Linq;
 using System.Text;
 using HarmonyLib;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 public static class OptionShower
 {

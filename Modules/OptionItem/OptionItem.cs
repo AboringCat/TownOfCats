@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 public abstract class OptionItem
 {
@@ -113,7 +113,7 @@ public abstract class OptionItem
 
     public OptionItem SetParent(OptionItem parent) => Do(i =>
     {
-        foreach (var role in EHR.Options.CustomRoleSpawnChances)
+        foreach (var role in TOC.Options.CustomRoleSpawnChances)
         {
             if (role.Value.Name == parent.Name)
             {

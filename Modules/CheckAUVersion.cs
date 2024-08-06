@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EHR.Modules;
+namespace TOC.Modules;
 
 // https://github.com/tukasa0001/TownOfHost/blob/main/Modules/VersionChecker.cs
 public static class VersionChecker

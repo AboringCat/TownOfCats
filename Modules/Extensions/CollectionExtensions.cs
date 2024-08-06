@@ -5,7 +5,7 @@ using System.Linq;
 // ReSharper disable ConvertIfStatementToReturnStatement
 // ReSharper disable ForCanBeConvertedToForeach
 
-namespace EHR
+namespace TOC
 {
     public static class CollectionExtensions
     {

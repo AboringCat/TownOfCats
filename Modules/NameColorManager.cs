@@ -1,13 +1,13 @@
 using System.Linq;
-using EHR.AddOns.Common;
-using EHR.AddOns.GhostRoles;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Common;
+using TOC.AddOns.GhostRoles;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using Hazel;
 
-namespace EHR;
+namespace TOC;
 
 public static class NameColorManager
 {
@@ -136,7 +136,7 @@ public static class NameColorManager
             CustomRoles.Monarch when target.Is(CustomRoles.Knighted) => Main.RoleColors[CustomRoles.Knighted],
             CustomRoles.Spiritcaller when target.Is(CustomRoles.EvilSpirit) => Main.RoleColors[CustomRoles.EvilSpirit],
             CustomRoles.Jackal when target.Is(CustomRoles.Recruit) => Main.RoleColors[CustomRoles.Jackal],
-            CustomRoles.Refugee when target.Is(CustomRoleTypes.Impostor) => Main.RoleColors[CustomRoles.ImpostorEHR],
+            CustomRoles.Refugee when target.Is(CustomRoleTypes.Impostor) => Main.RoleColors[CustomRoles.ImpostorTOC],
             CustomRoles.HeadHunter when ((HeadHunter)seerRoleClass).Targets.Contains(target.PlayerId) => "000000",
             CustomRoles.BountyHunter when (seerRoleClass as BountyHunter)?.GetTarget(seer) == target.PlayerId => "000000",
             CustomRoles.Pyromaniac when ((Pyromaniac)seerRoleClass).DousedList.Contains(target.PlayerId) => "#BA4A00",

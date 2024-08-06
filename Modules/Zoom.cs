@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 // Credit：https://github.com/tugaru1975/TownOfPlus/TOPmods/Zoom.cs 
 // Credit：https://github.com/Yumenopai/TownOfHost_Y

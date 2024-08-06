@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EHR.AddOns;
-using EHR.AddOns.GhostRoles;
-using EHR.Modules;
+using TOC.AddOns;
+using TOC.AddOns.GhostRoles;
+using TOC.Modules;
 using HarmonyLib;
 using UnityEngine;
 
 // ReSharper disable AccessToModifiedClosure
 // ReSharper disable InconsistentNaming
 
-namespace EHR;
+namespace TOC;
 
 [Flags]
 public enum CustomGameMode
@@ -420,6 +420,8 @@ public static class Options
     public static OptionItem DisableRunDiagnostics;
     public static OptionItem DisableRepairDrill;
     public static OptionItem DisableAlignTelescope;
+    public static OptionItem LierTaskSuide;
+    public static OptionItem LierKillSuide;
     public static OptionItem DisableRecordTemperature;
     public static OptionItem DisableFillCanisters;
     public static OptionItem DisableMonitorTree;
@@ -796,7 +798,7 @@ public static class Options
         Logger.Info("Options.Load End", "Options");
         GroupOptions();
         GroupAddons();
-        //Process.Start(@".\EHR_DATA\SettingsUI.exe");
+        //Process.Start(@".\TOC_DATA\SettingsUI.exe");
 
 #if DEBUG
         // Used for generating the table of roles for the README
@@ -805,7 +807,7 @@ public static class Options
             var sb = new System.Text.StringBuilder();
             var grouped = Enum.GetValues<CustomRoles>().GroupBy(x =>
             {
-                if (x is CustomRoles.GM or CustomRoles.Philantropist or CustomRoles.Konan or CustomRoles.NotAssigned or CustomRoles.LovingCrewmate or CustomRoles.LovingImpostor or CustomRoles.Convict || x.IsForOtherGameMode() || x.IsVanilla() || x.ToString().Contains("EHR") || HnSManager.AllHnSRoles.Contains(x)) return 4;
+                if (x is CustomRoles.GM or CustomRoles.Philantropist or CustomRoles.Konan or CustomRoles.NotAssigned or CustomRoles.LovingCrewmate or CustomRoles.LovingImpostor or CustomRoles.Convict || x.IsForOtherGameMode() || x.IsVanilla() || x.ToString().Contains("TOC") || HnSManager.AllHnSRoles.Contains(x)) return 4;
                 if (x.IsAdditionRole()) return 3;
                 if (x.IsImpostor() || x.IsMadmate()) return 0;
                 if (x.IsNeutral()) return 1;
@@ -1134,9 +1136,9 @@ public static class Options
 
         #endregion
 
-        #region EHRSettings
+        #region TOCSettings
 
-        MainLoadingText = "Building EHR settings";
+        MainLoadingText = "Building TOC settings";
 
         KickLowLevelPlayer = new IntegerOptionItem(19300, "KickLowLevelPlayer", new(0, 100, 1), 0, TabGroup.SystemSettings)
             .SetValueFormat(OptionFormat.Level)

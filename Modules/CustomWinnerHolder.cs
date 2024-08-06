@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Hazel;
 
-namespace EHR;
+namespace TOC;
 
 public static class CustomWinnerHolder
 {

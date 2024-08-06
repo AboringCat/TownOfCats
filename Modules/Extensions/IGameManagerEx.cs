@@ -1,6 +1,6 @@
 using AmongUs.GameOptions;
 
-namespace EHR.Modules.Extensions;
+namespace TOC.Modules.Extensions;
 
 public static class IGameManagerEx
 {

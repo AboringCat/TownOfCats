@@ -8,15 +8,15 @@ using HarmonyLib;
 using Newtonsoft.Json.Linq;
 using Twitch;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch]
 public class ModUpdater
 {
-    private const string URLGithub = "https://api.github.com/repos/Gurge44/EndlessHostRoles";
+    private const string URLGithub = "https://api.github.com/repos/AboringCat/TownOfCats";
     public static bool HasUpdate;
     private static bool HasOutdate;
     public static bool ForceUpdate = false;
@@ -75,7 +75,7 @@ public class ModUpdater
             string result;
             using (HttpClient client = new())
             {
-                client.DefaultRequestHeaders.Add("User-Agent", "EHR Updater");
+                client.DefaultRequestHeaders.Add("User-Agent", "TOC Updater");
                 using var response = await client.GetAsync(new Uri(url), HttpCompletionOption.ResponseContentRead);
                 if (!response.IsSuccessStatusCode)
                 {
@@ -100,7 +100,7 @@ public class ModUpdater
                 JArray assets = data["assets"].Cast<JArray>();
                 for (int i = 0; i < assets.Count; i++)
                 {
-                    if (assets[i]["name"].ToString() == $"EHR.v{LatestVersion}.zip")
+                    if (assets[i]["name"].ToString() == $"TOC.v{LatestVersion}.zip")
                     {
                         DownloadUrl = assets[i]["browser_download_url"].ToString();
                         break;
@@ -147,7 +147,7 @@ public class ModUpdater
     {
         try
         {
-            if (Directory.Exists("TOH_DATA") && File.Exists("./EHR_DATA/BanWords.txt"))
+            if (Directory.Exists("TOH_DATA") && File.Exists("./TOC_DATA/BanWords.txt"))
             {
                 DirectoryInfo di = new("TOH_DATA");
                 di.Delete(true);
@@ -166,7 +166,7 @@ public class ModUpdater
     public static void DeleteOldFiles()
     {
         string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-        const string searchPattern = "EHR.dll*";
+        const string searchPattern = "TOC.dll*";
         if (path != null)
         {
             string[] files = Directory.GetFiles(path, searchPattern);
@@ -192,7 +192,7 @@ public class ModUpdater
     {
         try
         {
-            const string savePath = "BepInEx/plugins/EHR.dll.temp";
+            const string savePath = "BepInEx/plugins/TOC.dll.temp";
 
             // Delete the temporary file if it exists
             if (File.Exists(savePath))
@@ -243,7 +243,7 @@ public class ModUpdater
     {
         try
         {
-            const string savePath = "BepInEx/plugins/EHR.dll.temp";
+            const string savePath = "BepInEx/plugins/TOC.dll.temp";
 
             // Delete the temporary file if it exists
             if (File.Exists(savePath))
@@ -266,11 +266,11 @@ public class ModUpdater
             await using (var stream = await response.Content.ReadAsStreamAsync())
             using (var archive = new ZipArchive(stream, ZipArchiveMode.Read))
             {
-                // Specify the relative path within the ZIP archive where "EHR.dll" is located
-                const string entryPath = "BepInEx/plugins/EHR.dll";
+                // Specify the relative path within the ZIP archive where "TOC.dll" is located
+                const string entryPath = "BepInEx/plugins/TOC.dll";
                 var entry = archive.GetEntry(entryPath) ?? throw new($"'{entryPath}' not found in the ZIP archive");
 
-                // Extract "EHR.dll" to the temporary file
+                // Extract "TOC.dll" to the temporary file
                 await using var entryStream = entry.Open();
                 await using var fileStream = new FileStream(savePath, FileMode.Create, FileAccess.Write, FileShare.None, bufferSize: 4096, useAsync: true);
                 await entryStream.CopyToAsync(fileStream);

@@ -22,7 +22,7 @@
 
 using System;
 
-namespace EHR;
+namespace TOC;
 
 public class MersenneTwister : IRandom
 {

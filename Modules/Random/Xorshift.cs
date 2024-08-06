@@ -1,6 +1,6 @@
 using System;
 
-namespace EHR;
+namespace TOC;
 
 public class Xorshift(uint seed) : IRandom
 {

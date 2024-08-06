@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Il2CppInterop.Runtime.InteropTypes;
 
-namespace EHR;
+namespace TOC;
 
 public static class ServerAddManager
 {

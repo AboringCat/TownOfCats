@@ -4,19 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.AddOns.Crewmate;
-using EHR.AddOns.Impostor;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Crewmate;
+using TOC.AddOns.Impostor;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using Hazel;
 using InnerNet;
 using UnityEngine;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR;
+namespace TOC;
 
 static class ExtendedPlayerControl
 {

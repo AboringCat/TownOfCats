@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.AddOns.Crewmate;
-using EHR.AddOns.GhostRoles;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Neutral;
+using TOC.AddOns.Crewmate;
+using TOC.AddOns.GhostRoles;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Neutral;
 using Hazel;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using InnerNet;
@@ -13,7 +13,7 @@ using Mathf = UnityEngine.Mathf;
 
 // ReSharper disable ForCanBeConvertedToForeach
 
-namespace EHR.Modules;
+namespace TOC.Modules;
 
 public sealed class PlayerGameOptionsSender(PlayerControl player) : GameOptionsSender
 {
@@ -196,27 +196,27 @@ public sealed class PlayerGameOptionsSender(PlayerControl player) : GameOptionsS
 
             switch (role)
             {
-                case CustomRoles.PhantomEHR:
+                case CustomRoles.PhantomTOC:
                     AURoleOptions.PhantomCooldown = ImpostorVanillaRoles.PhantomCooldown.GetFloat();
                     AURoleOptions.PhantomDuration = ImpostorVanillaRoles.PhantomDuration.GetFloat();
                     break;
-                case CustomRoles.ShapeshifterEHR:
+                case CustomRoles.ShapeshifterTOC:
                     AURoleOptions.ShapeshifterCooldown = ImpostorVanillaRoles.ShapeshiftCD.GetFloat();
                     AURoleOptions.ShapeshifterDuration = ImpostorVanillaRoles.ShapeshiftDur.GetFloat();
                     break;
-                case CustomRoles.EngineerEHR:
+                case CustomRoles.EngineerTOC:
                     AURoleOptions.EngineerCooldown = CrewmateVanillaRoles.EngineerCD.GetFloat();
                     AURoleOptions.EngineerInVentMaxTime = CrewmateVanillaRoles.EngineerDur.GetFloat();
                     break;
-                case CustomRoles.NoisemakerEHR:
+                case CustomRoles.NoisemakerTOC:
                     AURoleOptions.NoisemakerImpostorAlert = CrewmateVanillaRoles.NoiseMakerImpostorAlert.GetBool();
                     AURoleOptions.NoisemakerAlertDuration = CrewmateVanillaRoles.NoisemakerAlertDuration.GetFloat();
                     break;
-                case CustomRoles.ScientistEHR:
+                case CustomRoles.ScientistTOC:
                     AURoleOptions.ScientistCooldown = CrewmateVanillaRoles.ScientistCD.GetFloat();
                     AURoleOptions.ScientistBatteryCharge = CrewmateVanillaRoles.ScientistDur.GetFloat();
                     break;
-                case CustomRoles.TrackerEHR:
+                case CustomRoles.TrackerTOC:
                     AURoleOptions.TrackerCooldown = CrewmateVanillaRoles.TrackerCooldown.GetFloat();
                     AURoleOptions.TrackerDuration = CrewmateVanillaRoles.TrackerDuration.GetFloat();
                     AURoleOptions.TrackerDelay = CrewmateVanillaRoles.TrackerDelay.GetFloat();

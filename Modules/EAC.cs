@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 internal static class EAC
 {

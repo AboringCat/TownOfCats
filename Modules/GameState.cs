@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.AddOns.Crewmate;
-using EHR.AddOns.GhostRoles;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Crewmate;
+using TOC.AddOns.GhostRoles;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using InnerNet;
 
-namespace EHR;
+namespace TOC;
 
 public class PlayerState(byte playerId)
 {
@@ -34,7 +34,7 @@ public class PlayerState(byte playerId)
         Fall,
         AFK,
 
-        // EHR
+        // TOC
         Gambled,
         Eaten,
         Sacrifice,
@@ -336,6 +336,15 @@ public class TaskState
                 var Ue = IRandom.Instance;
                 if (Ue.Next(0, 100) < Options.UnluckyTaskSuicideChance.GetInt())
                 {
+                    player.Suicide();
+                }
+            }
+
+            if (player.Is(CustomRoles.Lier) && alive)
+            {
+                var Ue = IRandom.Instance;
+                if (Ue.Next(100, 100) < Options.LierTaskSuide.GetInt())
+                    {
                     player.Suicide();
                 }
             }

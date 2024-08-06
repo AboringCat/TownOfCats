@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace EHR.Modules
+namespace TOC.Modules
 {
     public static class AFKDetector
     {

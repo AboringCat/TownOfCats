@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 
-namespace EHR.Modules
+namespace TOC.Modules
 {
     internal static class CustomTeamManager
     {
@@ -18,8 +18,8 @@ namespace EHR.Modules
         {
             try
             {
-                if (!File.Exists("./EHR_DATA/CTA_Data.txt")) return;
-                CustomTeams = File.ReadAllLines("./EHR_DATA/CTA_Data.txt").Select(x => new CustomTeam(x)).ToHashSet();
+                if (!File.Exists("./TOC_DATA/CTA_Data.txt")) return;
+                CustomTeams = File.ReadAllLines("./TOC_DATA/CTA_Data.txt").Select(x => new CustomTeam(x)).ToHashSet();
                 RefreshCustomOptions();
             }
             catch (Exception e)

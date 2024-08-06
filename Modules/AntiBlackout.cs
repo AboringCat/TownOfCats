@@ -2,15 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 
-namespace EHR;
+namespace TOC;
 
 public static class AntiBlackout
 {
     private static Dictionary<byte, (bool isDead, bool Disconnected)> IsDeadCache = [];
-    private static readonly LogHandler Logger = EHR.Logger.Handler("AntiBlackout");
+    private static readonly LogHandler Logger = TOC.Logger.Handler("AntiBlackout");
 
     ///<summary>
     ///Whether to override the ejection process

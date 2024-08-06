@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 public static class NameNotifyManager
 {

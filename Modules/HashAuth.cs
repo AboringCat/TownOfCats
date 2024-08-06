@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EHR;
+namespace TOC;
 
 public class HashAuth(string hashValue, string salt = null, HashAlgorithm algorithm = null)
 {

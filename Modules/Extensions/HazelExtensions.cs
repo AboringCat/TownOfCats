@@ -1,7 +1,7 @@
 ﻿using Hazel;
 using UnityEngine;
 
-namespace EHR
+namespace TOC
 {
     public static class HazelExtensions
     {

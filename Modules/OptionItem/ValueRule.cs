@@ -1,6 +1,6 @@
 using System;
 
-namespace EHR;
+namespace TOC;
 
 public abstract class ValueRule<T>(T minValue, T maxValue, T step)
 {

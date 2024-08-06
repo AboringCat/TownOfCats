@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using EHR.AddOns.Common;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Common;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using Hazel;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR;
+namespace TOC;
 
 public static class GuessManager
 {
@@ -273,7 +273,7 @@ public static class GuessManager
 
                     switch (role)
                     {
-                        case CustomRoles.Crewmate or CustomRoles.CrewmateEHR when CrewmateVanillaRoles.VanillaCrewmateCannotBeGuessed.GetBool():
+                        case CustomRoles.Crewmate or CustomRoles.CrewmateTOC when CrewmateVanillaRoles.VanillaCrewmateCannotBeGuessed.GetBool():
                             if (!isUI) Utils.SendMessage(GetString("GuessVanillaCrewmate"), pc.PlayerId);
                             else pc.ShowPopUp(GetString("GuessVanillaCrewmate"));
                             return true;
@@ -1021,7 +1021,7 @@ public static class GuessManager
                     or CustomRoles.SuperStar
                     or CustomRoles.Konan
                     or CustomRoles.Oblivious
-                    or CustomRoles.GuardianAngelEHR
+                    or CustomRoles.GuardianAngelTOC
                    ) continue;
 
                 if (!role.IsEnable() && !role.RoleExist(countDead: true) && !role.IsConverted()) continue;

@@ -5,7 +5,7 @@ using Hazel;
 using Il2CppInterop.Runtime.InteropTypes.Arrays;
 using InnerNet;
 
-namespace EHR;
+namespace TOC;
 
 public class CustomRpcSender
 {

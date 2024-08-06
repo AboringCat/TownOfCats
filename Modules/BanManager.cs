@@ -8,16 +8,16 @@ using System.Text;
 using System.Text.RegularExpressions;
 using HarmonyLib;
 using InnerNet;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 public static class BanManager
 {
-    private const string DenyNameListPath = "./EHR_DATA/DenyName.txt";
-    private const string BanListPath = "./EHR_DATA/BanList.txt";
-    private const string ModeratorListPath = "./EHR_DATA/Moderators.txt";
-    private const string WhiteListListPath = "./EHR_DATA/WhiteList.txt";
+    private const string DenyNameListPath = "./TOC_DATA/DenyName.txt";
+    private const string BanListPath = "./TOC_DATA/BanList.txt";
+    private const string ModeratorListPath = "./TOC_DATA/Moderators.txt";
+    private const string WhiteListListPath = "./TOC_DATA/WhiteList.txt";
 #pragma warning disable IDE0044 // Add readonly modifier
     private static List<string> EACList = []; // Don't make it read-only
 #pragma warning restore IDE0044 // Add readonly modifier
@@ -27,7 +27,7 @@ public static class BanManager
     {
         try
         {
-            Directory.CreateDirectory("EHR_DATA");
+            Directory.CreateDirectory("TOC_DATA");
 
             if (!File.Exists(BanListPath))
             {
@@ -39,7 +39,7 @@ public static class BanManager
             {
                 Logger.Warn("Create a new DenyName.txt file", "BanManager");
                 File.Create(DenyNameListPath).Close();
-                File.WriteAllText(DenyNameListPath, GetResourcesTxt("EHR.Resources.Config.DenyName.txt"));
+                File.WriteAllText(DenyNameListPath, GetResourcesTxt("TOC.Resources.Config.DenyName.txt"));
             }
 
             if (!File.Exists(ModeratorListPath))
@@ -55,7 +55,7 @@ public static class BanManager
             }
 
             // Read EAC List
-            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("EHR.Resources.Config.EACList.txt");
+            var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("TOC.Resources.Config.EACList.txt");
             stream.Position = 0;
             using StreamReader sr = new(stream, Encoding.UTF8);
             string line;
@@ -112,7 +112,7 @@ public static class BanManager
 
         try
         {
-            Directory.CreateDirectory("EHR_DATA");
+            Directory.CreateDirectory("TOC_DATA");
             if (!File.Exists(DenyNameListPath)) File.Create(DenyNameListPath).Close();
             using StreamReader sr = new(DenyNameListPath);
             while (sr.ReadLine() is { } line)
@@ -198,7 +198,7 @@ public static class BanManager
         else if (code == "") return false;
         try
         {
-            Directory.CreateDirectory("EHR_DATA");
+            Directory.CreateDirectory("TOC_DATA");
             if (!File.Exists(BanListPath)) File.Create(BanListPath).Close();
             using StreamReader sr = new(BanListPath);
             string line;

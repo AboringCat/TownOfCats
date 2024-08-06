@@ -1,6 +1,6 @@
 using System;
 
-namespace EHR;
+namespace TOC;
 
 public class NetRandomWrapper(Random instance) : IRandom
 {
