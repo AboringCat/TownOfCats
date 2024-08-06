@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using UnityEngine;
 
-namespace EHR.Neutral
+namespace TOC.Neutral
 {
     internal class Tiger : RoleBase
     {

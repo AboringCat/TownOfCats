@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using static EHR.Options;
-using static EHR.Translator;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Neutral;
+namespace TOC.Neutral;
 
 public class Jackal : RoleBase
 {

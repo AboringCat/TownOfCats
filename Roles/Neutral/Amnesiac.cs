@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using static EHR.Options;
-using static EHR.Translator;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Neutral;
+namespace TOC.Neutral;
 
 public class Amnesiac : RoleBase
 {
@@ -117,14 +117,14 @@ public class Amnesiac : RoleBase
                 amneNotifyString = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Amnesiac), GetString("RememberedNeutralKiller"));
                 break;
             case CustomRoles.LovingCrewmate when loversAlive > 0:
-                target.RpcSetCustomRole(CustomRoles.CrewmateEHR);
+                target.RpcSetCustomRole(CustomRoles.CrewmateTOC);
                 RememberedRole = CustomRoles.LovingCrewmate;
                 Main.LoversPlayers.RemoveAll(x => x.PlayerId == target.PlayerId);
                 Main.LoversPlayers.Add(amnesiac);
                 amneNotifyString = Utils.ColorString(Utils.GetRoleColor(CustomRoles.Amnesiac), GetString("RememberedLover"));
                 break;
             case CustomRoles.LovingImpostor when loversAlive > 0:
-                target.RpcSetCustomRole(CustomRoles.ImpostorEHR);
+                target.RpcSetCustomRole(CustomRoles.ImpostorTOC);
                 RememberedRole = CustomRoles.LovingImpostor;
                 Main.LoversPlayers.RemoveAll(x => x.PlayerId == target.PlayerId);
                 Main.LoversPlayers.Add(amnesiac);

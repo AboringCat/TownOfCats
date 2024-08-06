@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using static EHR.Options;
-using static EHR.Translator;
+using TOC.Modules;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Neutral
+namespace TOC.Neutral
 {
     public class Spiritcaller : RoleBase
     {

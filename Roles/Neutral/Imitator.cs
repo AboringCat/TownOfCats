@@ -1,4 +1,4 @@
-﻿namespace EHR.Neutral;
+﻿namespace TOC.Neutral;
 
 // Credit: https://github.com/Yumenopai/TownOfHost_Y
 public class Imitator : RoleBase

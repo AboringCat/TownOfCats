@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.Crewmate;
-using EHR.Modules;
+using TOC.Crewmate;
+using TOC.Modules;
 using UnityEngine;
-using static EHR.Options;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Options;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR.Neutral;
+namespace TOC.Neutral;
 
 public class Magician : RoleBase
 {

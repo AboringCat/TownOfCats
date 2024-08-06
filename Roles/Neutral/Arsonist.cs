@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using UnityEngine;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Neutral
+namespace TOC.Neutral
 {
     internal class Arsonist : RoleBase
     {

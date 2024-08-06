@@ -1,7 +1,7 @@
-using EHR.Impostor;
-using static EHR.Options;
+using TOC.Impostor;
+using static TOC.Options;
 
-namespace EHR.Neutral;
+namespace TOC.Neutral;
 
 public class HexMaster : RoleBase
 {

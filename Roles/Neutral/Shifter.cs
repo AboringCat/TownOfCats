@@ -1,11 +1,11 @@
 ﻿/*using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Crewmate;
-using EHR.Modules;
-using EHR.Patches;
+using TOC.Crewmate;
+using TOC.Modules;
+using TOC.Patches;
 
-namespace EHR.Neutral
+namespace TOC.Neutral
 {
     public class Shifter : RoleBase
     {

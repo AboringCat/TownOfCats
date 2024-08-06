@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Neutral
+namespace TOC.Neutral
 {
     public class FFF : RoleBase
     {

@@ -1,6 +1,6 @@
-﻿using static EHR.Options;
+﻿using static TOC.Options;
 
-namespace EHR.Neutral
+namespace TOC.Neutral
 {
     internal class Terrorist : RoleBase
     {
