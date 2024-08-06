@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using EHR.Modules;
+using TOC.Modules;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class Judge : RoleBase
 {

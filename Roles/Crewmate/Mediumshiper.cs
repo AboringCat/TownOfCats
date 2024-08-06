@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class Mediumshiper : RoleBase
 {

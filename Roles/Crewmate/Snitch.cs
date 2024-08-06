@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class Snitch : RoleBase
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 internal class NiceEraser : RoleBase
 {

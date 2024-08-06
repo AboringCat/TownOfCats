@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Mathematician : RoleBase
     {

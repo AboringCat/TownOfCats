@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Linq;
-using EHR.Modules;
-using EHR.Patches;
+using TOC.Modules;
+using TOC.Patches;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class NiceSwapper : RoleBase
 {

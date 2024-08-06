@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Oxyman : RoleBase
     {

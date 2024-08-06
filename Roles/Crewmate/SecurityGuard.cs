@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 using AmongUs.GameOptions;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class SecurityGuard : RoleBase
     {

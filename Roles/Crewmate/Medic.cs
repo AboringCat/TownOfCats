@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class Medic : RoleBase
 {

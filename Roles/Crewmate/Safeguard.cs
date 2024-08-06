@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Safeguard : RoleBase
     {

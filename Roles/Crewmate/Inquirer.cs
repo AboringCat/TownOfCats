@@ -1,4 +1,4 @@
-﻿namespace EHR.Crewmate
+﻿namespace TOC.Crewmate
 {
     public class Inquirer : RoleBase
     {

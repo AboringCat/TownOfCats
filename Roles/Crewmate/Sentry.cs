@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class Sentry : RoleBase
     {

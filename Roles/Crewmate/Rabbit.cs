@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Rabbit : RoleBase
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Socialite : RoleBase
     {

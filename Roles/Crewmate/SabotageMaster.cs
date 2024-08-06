@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class SabotageMaster : RoleBase
 {
