@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
 class SetUpRoleTextPatch
@@ -397,7 +397,7 @@ class BeginCrewmatePatch
 
                 CustomRoles.SabotageMaster or
                     CustomRoles.Engineer or
-                    CustomRoles.EngineerEHR or
+                    CustomRoles.EngineerTOC or
                     CustomRoles.Inhibitor or
                     CustomRoles.Saboteur or
                     CustomRoles.SecurityGuard or
@@ -449,15 +449,15 @@ class BeginCrewmatePatch
                     => GetIntroSound(RoleTypes.Tracker),
 
                 CustomRoles.Noisemaker
-                    or CustomRoles.NoisemakerEHR
+                    or CustomRoles.NoisemakerTOC
                     => GetIntroSound(RoleTypes.Noisemaker),
 
                 CustomRoles.Phantom
-                    or CustomRoles.PhantomEHR
+                    or CustomRoles.PhantomTOC
                     => GetIntroSound(RoleTypes.Phantom),
 
                 CustomRoles.Shapeshifter
-                    or CustomRoles.ShapeshifterEHR
+                    or CustomRoles.ShapeshifterTOC
                     => GetIntroSound(RoleTypes.Shapeshifter),
 
                 _ => GetAudioClipFromCustomRoleType()

@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace EHR;
+namespace TOC;
 
 //参考元:https://github.com/yukieiji/ExtremeRoles/blob/master/ExtremeRoles/Patches/AirshipStatusPatch.cs
 [HarmonyPatch(typeof(AirshipStatus), nameof(AirshipStatus.PrespawnStep))]

@@ -1,8 +1,8 @@
-﻿using EHR.Patches;
+﻿using TOC.Patches;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(GameStartManager))]
 class AllMapIconsPatch
@@ -23,8 +23,8 @@ class AllMapIconsPatch
 
         MapIconByName dleksIcon = Object.Instantiate(__instance, __instance.gameObject.transform).AllMapIcons[0];
         dleksIcon.Name = MapNames.Dleks;
-        dleksIcon.MapImage = Utils.LoadSprite("EHR.Resources.Images.DleksBanner.png", 100f);
-        dleksIcon.NameImage = Utils.LoadSprite("EHR.Resources.Images.DleksBanner-Wordart.png", 100f);
+        dleksIcon.MapImage = Utils.LoadSprite("TOC.Resources.Images.DleksBanner.png", 100f);
+        dleksIcon.NameImage = Utils.LoadSprite("TOC.Resources.Images.DleksBanner-Wordart.png", 100f);
         __instance.AllMapIcons.Add(dleksIcon);
     }
 }

@@ -1,9 +1,9 @@
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR.Patches;
+namespace TOC.Patches;
 
 [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.ShowButtons))]
 public class EndGameManagerPatch

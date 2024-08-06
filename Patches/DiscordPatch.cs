@@ -3,7 +3,7 @@ using AmongUs.Data;
 using Discord;
 using HarmonyLib;
 
-namespace EHR.Patches
+namespace TOC.Patches
 {
     // Originally from Town of Us Rewritten, by Det
     [HarmonyPatch(typeof(ActivityManager), nameof(ActivityManager.UpdateActivity))]
@@ -16,7 +16,7 @@ namespace EHR.Patches
         {
             if (activity == null) return;
 
-            var details = $"EHR v{Main.PluginDisplayVersion}";
+            var details = $"TOC v{Main.PluginDisplayVersion}";
             activity.Details = details;
 
             try
@@ -33,14 +33,14 @@ namespace EHR.Patches
 
                         if (lobbycode != "" && region != "")
                         {
-                            details = $"EHR - {lobbycode} ({region})";
+                            details = $"TOC - {lobbycode} ({region})";
                         }
 
                         activity.Details = details;
                     }
                     else
                     {
-                        details = $"EHR v{Main.PluginDisplayVersion}";
+                        details = $"TOC v{Main.PluginDisplayVersion}";
 
                         activity.Details = details;
                     }
@@ -51,7 +51,7 @@ namespace EHR.Patches
             {
                 Logger.Error("Error in updating discord rpc", "DiscordPatch");
                 Logger.Exception(ex, "DiscordPatch");
-                details = $"EHR v{Main.PluginDisplayVersion}";
+                details = $"TOC v{Main.PluginDisplayVersion}";
                 activity.Details = details;
             }
         }

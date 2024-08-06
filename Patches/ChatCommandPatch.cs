@@ -6,20 +6,20 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AmongUs.GameOptions;
 using Assets.CoreScripts;
-using EHR.AddOns.Common;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Common;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 // ReSharper disable InconsistentNaming
 
 
-namespace EHR;
+namespace TOC;
 
 class Command(string[] commandForms, string arguments, string description, Command.UsageLevels usageLevel, Command.UsageTimes usageTime, Action<ChatController, PlayerControl, string, string[]> action, bool isCanceled, string[] argsDescriptions = null)
 {
@@ -172,7 +172,7 @@ internal static class ChatCommands
     {
         if (friendCode == "" || friendCode == string.Empty || !Options.ApplyModeratorList.GetBool()) return false;
 
-        const string friendCodesFilePath = "./EHR_DATA/Moderators.txt";
+        const string friendCodesFilePath = "./TOC_DATA/Moderators.txt";
         if (!File.Exists(friendCodesFilePath))
         {
             File.WriteAllText(friendCodesFilePath, string.Empty);
@@ -188,7 +188,7 @@ internal static class ChatCommands
     {
         if (friendCode == "" || friendCode == string.Empty || !Options.ApplyVIPList.GetBool()) return false;
 
-        const string friendCodesFilePath = "./EHR_DATA/VIPs.txt";
+        const string friendCodesFilePath = "./TOC_DATA/VIPs.txt";
         if (!File.Exists(friendCodesFilePath))
         {
             File.WriteAllText(friendCodesFilePath, string.Empty);
@@ -289,8 +289,8 @@ internal static class ChatCommands
         if (VIPPc == null) return;
         var fc = VIPPc.FriendCode;
         if (!IsPlayerVIP(fc)) Utils.SendMessage(GetString("PlayerNotVIP"), player.PlayerId);
-        var lines = File.ReadAllLines("./EHR_DATA/VIPs.txt").Where(line => !line.Contains(fc)).ToArray();
-        File.WriteAllLines("./EHR_DATA/VIPs.txt", lines);
+        var lines = File.ReadAllLines("./TOC_DATA/VIPs.txt").Where(line => !line.Contains(fc)).ToArray();
+        File.WriteAllLines("./TOC_DATA/VIPs.txt", lines);
         Utils.SendMessage(GetString("PlayerRemovedFromVIPList"), player.PlayerId);
     }
 
@@ -301,7 +301,7 @@ internal static class ChatCommands
         if (newVIPPc == null) return;
         var fc = newVIPPc.FriendCode;
         if (IsPlayerVIP(fc)) Utils.SendMessage(GetString("PlayerAlreadyVIP"), player.PlayerId);
-        File.AppendAllText("./EHR_DATA/VIPs.txt", $"\n{fc}");
+        File.AppendAllText("./TOC_DATA/VIPs.txt", $"\n{fc}");
         Utils.SendMessage(GetString("PlayerAddedToVIPList"), player.PlayerId);
     }
 
@@ -1038,7 +1038,7 @@ internal static class ChatCommands
         if (remModPc == null) return;
         var remFc = remModPc.FriendCode;
         if (!IsPlayerModerator(remFc)) Utils.SendMessage(GetString("PlayerNotMod"), player.PlayerId);
-        File.WriteAllLines("./EHR_DATA/Moderators.txt", File.ReadAllLines("./EHR_DATA/Moderators.txt").Where(x => !x.Contains(remFc)));
+        File.WriteAllLines("./TOC_DATA/Moderators.txt", File.ReadAllLines("./TOC_DATA/Moderators.txt").Where(x => !x.Contains(remFc)));
         Utils.SendMessage(GetString("PlayerRemovedFromModList"), player.PlayerId);
     }
 
@@ -1049,7 +1049,7 @@ internal static class ChatCommands
         if (newModPc == null) return;
         var fc = newModPc.FriendCode;
         if (IsPlayerModerator(fc)) Utils.SendMessage(GetString("PlayerAlreadyMod"), player.PlayerId);
-        File.AppendAllText("./EHR_DATA/Moderators.txt", $"\n{fc}");
+        File.AppendAllText("./TOC_DATA/Moderators.txt", $"\n{fc}");
         Utils.SendMessage(GetString("PlayerAddedToModList"), player.PlayerId);
     }
 
@@ -1993,7 +1993,7 @@ internal class UpdateCharCountPatch
     public static void Postfix(FreeChatInputField __instance)
     {
         int length = __instance.textArea.text.Length;
-        __instance.charCountText.SetText(length <= 0 ? GetString("ThankYouForUsingEHR") : $"{length}/{__instance.textArea.characterLimit}");
+        __instance.charCountText.SetText(length <= 0 ? GetString("ThankYouForUsingTOC") : $"{length}/{__instance.textArea.characterLimit}");
         __instance.charCountText.enableWordWrapping = false;
         if (length < (AmongUsClient.Instance.AmHost ? 1700 : 250))
             __instance.charCountText.color = Color.black;

@@ -1,15 +1,15 @@
 using System;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using HarmonyLib;
 using Hazel;
 using Il2CppSystem.Collections.Generic;
 using InnerNet;
 using TMPro;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.MakePublic))]
 internal class MakePublicPatch

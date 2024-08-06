@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-namespace EHR.Patches
+namespace TOC.Patches
 {
     public static class CosmeticsPatch
     {

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Impostor;
+using TOC.Impostor;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 class RandomSpawn
 {

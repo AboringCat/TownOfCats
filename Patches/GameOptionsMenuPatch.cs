@@ -2,14 +2,14 @@ using System;
 using System.Collections;
 using System.Linq;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
-using EHR.Modules;
-using EHR.Patches;
+using TOC.Modules;
+using TOC.Patches;
 using HarmonyLib;
 using Il2CppSystem.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 // Credit: https://github.com/Yumenopai/TownOfHost_Y
 
@@ -733,7 +733,7 @@ public static class StringOptionPatch
             var name = item.GetName();
             if (Enum.GetValues<CustomRoles>().FindFirst(x => Translator.GetString($"{x}") == name.RemoveHtmlTags(), out var role))
             {
-                var roleName = role.IsVanilla() ? role + "EHR" : role.ToString();
+                var roleName = role.IsVanilla() ? role + "TOC" : role.ToString();
                 var str = Translator.GetString($"{roleName}InfoLong");
                 string infoLong;
                 try
@@ -801,8 +801,8 @@ public class GameSettingMenuPatch
             button.activeTextColor = button.inactiveTextColor = Color.white;
             button.selectedTextColor = new(0.7f, 0.7f, 0.7f);
 
-            // var activeButton = Utils.LoadSprite($"EHR.Resources.Images.TabIcon_{tab}.png", 100f);
-            // button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = activeButton /*Utils.LoadSprite($"EHR.Resources.Tab_Small_{tab}.png", 100f)*/;
+            // var activeButton = Utils.LoadSprite($"TOC.Resources.Images.TabIcon_{tab}.png", 100f);
+            // button.inactiveSprites.GetComponent<SpriteRenderer>().sprite = activeButton /*Utils.LoadSprite($"TOC.Resources.Tab_Small_{tab}.png", 100f)*/;
             // button.activeSprites.GetComponent<SpriteRenderer>().sprite = activeButton;
             // button.selectedSprites.GetComponent<SpriteRenderer>().sprite = activeButton;
             Color color = tab switch
@@ -984,9 +984,9 @@ public class GameSettingMenuPatch
         Object.Destroy(button.FindChild("Disabled").FindChild("Icon").GetComponent<SpriteRenderer>());
         Object.Destroy(button.transform.FindChild("Text").GetComponent<TextMeshPro>());
 
-        button.FindChild("Normal").FindChild("Background").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("EHR.Resources.Images.SearchIconActive.png", 100f);
-        button.FindChild("Hover").FindChild("Background").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("EHR.Resources.Images.SearchIconHover.png", 100f);
-        button.FindChild("Disabled").FindChild("Background").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("EHR.Resources.Images.SearchIcon.png", 100f);
+        button.FindChild("Normal").FindChild("Background").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("TOC.Resources.Images.SearchIconActive.png", 100f);
+        button.FindChild("Hover").FindChild("Background").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("TOC.Resources.Images.SearchIconHover.png", 100f);
+        button.FindChild("Disabled").FindChild("Background").GetComponent<SpriteRenderer>().sprite = Utils.LoadSprite("TOC.Resources.Images.SearchIcon.png", 100f);
 
         if (IsRussian)
         {

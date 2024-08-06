@@ -4,16 +4,16 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AmongUs.Data;
 using AmongUs.GameOptions;
-using EHR.Crewmate;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Crewmate;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameJoined))]
 class OnGameJoinedPatch

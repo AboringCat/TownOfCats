@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongUs.Data;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
-using EHR.Patches;
+using TOC.Modules;
+using TOC.Neutral;
+using TOC.Patches;
 using HarmonyLib;
 using InnerNet;
 using TMPro;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Update))]
 public static class GameStartManagerUpdatePatch

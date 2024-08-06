@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using EHR.Modules;
+using TOC.Modules;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(PingTracker), nameof(PingTracker.Update))]
 internal class PingTrackerUpdatePatch
@@ -177,7 +177,7 @@ internal class TitleLogoPatch
         CloseRightButton.transform.localScale = new(1f, 1f, 1f);
         CloseRightButton.AddComponent<BoxCollider2D>().size = new(0.6f, 1.5f);
         var closeRightSpriteRenderer = CloseRightButton.AddComponent<SpriteRenderer>();
-        closeRightSpriteRenderer.sprite = Utils.LoadSprite("EHR.Resources.Images.RightPanelCloseButton.png", 100f);
+        closeRightSpriteRenderer.sprite = Utils.LoadSprite("TOC.Resources.Images.RightPanelCloseButton.png", 100f);
         closeRightSpriteRenderer.color = new(1f, 0.78f, 0.9f, 1f);
         var closeRightPassiveButton = CloseRightButton.AddComponent<PassiveButton>();
         closeRightPassiveButton.OnClick = new();

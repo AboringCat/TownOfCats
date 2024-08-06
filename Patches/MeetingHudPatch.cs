@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.AddOns.Common;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Common;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR.Patches;
+namespace TOC.Patches;
 
 [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.CheckForEndVoting))]
 class CheckForEndVotingPatch
@@ -324,7 +324,7 @@ class CheckForEndVotingPatch
         {
             coloredRole = (Lovers.LovingImpostorRoleForOtherImps.GetValue() switch
             {
-                0 => CustomRoles.ImpostorEHR,
+                0 => CustomRoles.ImpostorTOC,
                 1 => Lovers.LovingImpostorRole,
                 _ => CustomRoles.LovingImpostor
             }).ToColoredString();
@@ -629,6 +629,9 @@ class MeetingHudStartPatch
 
         if (CustomRoles.God.RoleExist() && Options.NotifyGodAlive.GetBool())
             AddMsg(GetString("GodNoticeAlive"), 255, Utils.ColorString(Utils.GetRoleColor(CustomRoles.God), GetString("GodAliveTitle")));
+
+        if (CustomRoles.Lier.RoleExist())
+            AddMsg(GetString("LierNoticeAlive"), 255, Utils.ColorString(Utils.GetRoleColor(CustomRoles.Lier), GetString("LierToldLie")));
 
         if (MeetingStates.FirstMeeting && CustomRoles.Workaholic.RoleExist() && Workaholic.WorkaholicGiveAdviceAlive.GetBool() && !Workaholic.WorkaholicCannotWinAtDeath.GetBool() /* && !Options.GhostIgnoreTasks.GetBool()*/)
         {

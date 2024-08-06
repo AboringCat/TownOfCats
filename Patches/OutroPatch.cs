@@ -2,17 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EHR.AddOns.GhostRoles;
-using EHR.Crewmate;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.GhostRoles;
+using TOC.Crewmate;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using TMPro;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnGameEnd))]
 class EndGamePatch

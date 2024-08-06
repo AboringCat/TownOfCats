@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using HarmonyLib;
 
-namespace EHR;
+namespace TOC;
 
 public class AirshipElectricalDoors
 {

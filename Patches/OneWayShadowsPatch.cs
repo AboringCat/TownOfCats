@@ -1,6 +1,6 @@
 using HarmonyLib;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(OneWayShadows), nameof(OneWayShadows.IsIgnored))]
 public static class OneWayShadowsIsIgnoredPatch

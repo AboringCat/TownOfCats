@@ -2,7 +2,7 @@
 using static CosmeticsLayer;
 using Action = Il2CppSystem.Action;
 
-namespace EHR.Patches;
+namespace TOC.Patches;
 
 [HarmonyPatch(typeof(AprilFoolsMode), nameof(AprilFoolsMode.ShouldShowAprilFoolsToggle))]
 public static class ShouldShowTogglePatch

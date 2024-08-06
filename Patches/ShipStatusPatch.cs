@@ -2,17 +2,17 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
 using BepInEx;
-using EHR.AddOns.Crewmate;
-using EHR.AddOns.Impostor;
-using EHR.Crewmate;
-using EHR.Modules;
-using EHR.Neutral;
-using EHR.Patches;
+using TOC.AddOns.Crewmate;
+using TOC.AddOns.Impostor;
+using TOC.Crewmate;
+using TOC.Modules;
+using TOC.Neutral;
+using TOC.Patches;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.FixedUpdate))]
 class ShipFixedUpdatePatch

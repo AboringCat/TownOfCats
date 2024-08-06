@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
 using BepInEx.Unity.IL2CPP.Utils.Collections;
-using EHR.AddOns.Common;
-using EHR.AddOns.GhostRoles;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.AddOns.Common;
+using TOC.AddOns.GhostRoles;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
 using UnityEngine;
-using static EHR.CustomWinnerHolder;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.CustomWinnerHolder;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
 class GameEndChecker
@@ -230,6 +230,14 @@ class GameEndChecker
                     ResetAndSetWinner(CustomWinner.God);
                     Main.AllPlayerControls
                         .Where(p => p.Is(CustomRoles.God) && p.IsAlive())
+                        .Do(p => WinnerIds.Add(p.PlayerId));
+                }
+
+                if (CustomRoles.Lier.RoleExist())
+                {
+                    ResetAndSetWinner(CustomWinner.Lier);
+                    Main.AllPlayerControls
+                        .Where(p => p.Is(CustomRoles.Lier) && p.IsAlive())
                         .Do(p => WinnerIds.Add(p.PlayerId));
                 }
 

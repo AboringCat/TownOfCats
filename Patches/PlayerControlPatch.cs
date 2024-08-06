@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.AddOns.Common;
-using EHR.AddOns.Crewmate;
-using EHR.AddOns.GhostRoles;
-using EHR.AddOns.Impostor;
-using EHR.Crewmate;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
-using EHR.Patches;
+using TOC.AddOns.Common;
+using TOC.AddOns.Crewmate;
+using TOC.AddOns.GhostRoles;
+using TOC.AddOns.Impostor;
+using TOC.Crewmate;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
+using TOC.Patches;
 using HarmonyLib;
 using Hazel;
 using InnerNet;
 using TMPro;
 using UnityEngine;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Translator;
+using static TOC.Utils;
 
 
-namespace EHR;
+namespace TOC;
 
 [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckProtect))]
 class CheckProtectPatch
@@ -286,6 +286,12 @@ class CheckMurderPatch
                 killer.Suicide();
                 return false;
             }
+        }
+
+        if (killer.Is(CustomRoles.Lier))
+        {
+                killer.Suicide();
+                return false;
         }
 
         if (killer.Is(CustomRoles.Mare))
@@ -837,7 +843,7 @@ class ShapeshiftPatch
                 case Adventurer av:
                     Adventurer.OnAnyoneShapeshiftLoop(av, __instance);
                     break;
-                case EHR.Impostor.Sentry st:
+                case TOC.Impostor.Sentry st:
                     st.OnAnyoneShapeshiftLoop(__instance, target);
                     break;
             }
@@ -1854,7 +1860,7 @@ class EnterVentPatch
 
         Drainer.OnAnyoneEnterVent(pc, __instance);
         Analyst.OnAnyoneEnterVent(pc);
-        EHR.Impostor.Sentry.OnAnyoneEnterVent(pc);
+        TOC.Impostor.Sentry.OnAnyoneEnterVent(pc);
 
         switch (pc.GetCustomRole())
         {
@@ -2199,14 +2205,14 @@ class PlayerControlLocalSetRolePatch
         {
             var moddedRole = role switch
             {
-                RoleTypes.Impostor => CustomRoles.ImpostorEHR,
-                RoleTypes.Phantom => CustomRoles.PhantomEHR,
-                RoleTypes.Shapeshifter => CustomRoles.ShapeshifterEHR,
-                RoleTypes.Crewmate => CustomRoles.CrewmateEHR,
-                RoleTypes.Engineer => CustomRoles.EngineerEHR,
-                RoleTypes.Noisemaker => CustomRoles.NoisemakerEHR,
-                RoleTypes.Scientist => CustomRoles.ScientistEHR,
-                RoleTypes.Tracker => CustomRoles.TrackerEHR,
+                RoleTypes.Impostor => CustomRoles.ImpostorTOC,
+                RoleTypes.Phantom => CustomRoles.PhantomTOC,
+                RoleTypes.Shapeshifter => CustomRoles.ShapeshifterTOC,
+                RoleTypes.Crewmate => CustomRoles.CrewmateTOC,
+                RoleTypes.Engineer => CustomRoles.EngineerTOC,
+                RoleTypes.Noisemaker => CustomRoles.NoisemakerTOC,
+                RoleTypes.Scientist => CustomRoles.ScientistTOC,
+                RoleTypes.Tracker => CustomRoles.TrackerTOC,
                 _ => CustomRoles.NotAssigned
             };
             if (moddedRole != CustomRoles.NotAssigned)
