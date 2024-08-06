@@ -1,4 +1,4 @@
-﻿namespace EHR
+﻿namespace TOC
 {
     internal interface IVanillaSettingHolder
     {

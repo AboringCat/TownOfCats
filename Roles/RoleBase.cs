@@ -2,11 +2,11 @@
 using System;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.AddOns.Crewmate;
-using EHR.AddOns.Impostor;
+using TOC.AddOns.Crewmate;
+using TOC.AddOns.Impostor;
 
 
-namespace EHR
+namespace TOC
 {
     public abstract class RoleBase : IComparable<RoleBase>
     {
