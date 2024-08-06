@@ -3,7 +3,7 @@
 
 <br>
 
-<img align="left" alt="Cover" src="Resources/Images/EHR-Icon.png" width="50%" height="250" />
+<img align="left" alt="Cover" src="Resources/Images/TownOfCatsLOGO.jpg" width="50%" height="250" />
 
 <p align="right">
 
