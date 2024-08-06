@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 internal class Eraser : RoleBase
 {

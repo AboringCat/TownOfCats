@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 using UnityEngine;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     public class Stealth : RoleBase
     {

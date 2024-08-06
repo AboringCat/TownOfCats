@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class Silencer : RoleBase
 {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Neutral;
+using TOC.Neutral;
 using UnityEngine;
-using static EHR.Options;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Options;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     public class RiftMaker : RoleBase
     {

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Neutral;
-using static EHR.Options;
-using static EHR.Translator;
+using TOC.Neutral;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     public class Devourer : RoleBase
     {

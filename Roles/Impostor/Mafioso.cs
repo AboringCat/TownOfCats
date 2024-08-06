@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
-using static EHR.Options;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Options;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     /*
      * Tiers and their perks

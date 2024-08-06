@@ -1,4 +1,4 @@
-﻿namespace EHR.Impostor
+﻿namespace TOC.Impostor
 {
     internal class Godfather : RoleBase
     {

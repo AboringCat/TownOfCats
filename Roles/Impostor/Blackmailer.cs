@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using EHR.Patches;
+using TOC.Patches;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class Blackmailer : RoleBase
     {

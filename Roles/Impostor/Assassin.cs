@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using Hazel;
-using static EHR.Options;
-using static EHR.Translator;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 internal class Assassin : RoleBase
 {

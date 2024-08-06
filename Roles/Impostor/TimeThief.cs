@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class TimeThief : RoleBase
 {

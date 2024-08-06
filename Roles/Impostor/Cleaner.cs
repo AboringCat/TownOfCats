@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Neutral;
-using static EHR.Options;
+using TOC.Neutral;
+using static TOC.Options;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class Cleaner : RoleBase
     {

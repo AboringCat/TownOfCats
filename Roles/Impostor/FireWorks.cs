@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using Hazel;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class FireWorks : RoleBase
 {

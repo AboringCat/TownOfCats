@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using EHR.Crewmate;
-using EHR.Modules;
+using TOC.Crewmate;
+using TOC.Modules;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class Councillor : RoleBase
 {

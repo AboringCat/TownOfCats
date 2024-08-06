@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using EHR.Crewmate;
-using static EHR.Options;
+using TOC.Crewmate;
+using static TOC.Options;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class Nullifier : RoleBase
     {

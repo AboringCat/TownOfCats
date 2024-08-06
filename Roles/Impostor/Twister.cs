@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
-using static EHR.Options;
-using static EHR.Translator;
-using static EHR.Utils;
+using TOC.Modules;
+using TOC.Neutral;
+using static TOC.Options;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     public class Twister : RoleBase
     {

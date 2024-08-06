@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Crewmate;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Crewmate;
+using TOC.Modules;
+using TOC.Neutral;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class Vampire : RoleBase
 {

@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
 using Il2CppSystem.Text;
 using UnityEngine;
-using static EHR.Options;
-using static EHR.Translator;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class EvilTracker : RoleBase
 {

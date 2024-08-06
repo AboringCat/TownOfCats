@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     public class Lurker : RoleBase
     {

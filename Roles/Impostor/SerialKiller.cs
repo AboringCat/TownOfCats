@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class SerialKiller : RoleBase
 {

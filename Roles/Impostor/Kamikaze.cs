@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using static EHR.Options;
-using static EHR.Utils;
+using static TOC.Options;
+using static TOC.Utils;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class Kamikaze : RoleBase
     {

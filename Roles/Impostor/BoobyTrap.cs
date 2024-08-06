@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using EHR.Modules;
-using static EHR.Options;
+using TOC.Modules;
+using static TOC.Options;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class BoobyTrap : RoleBase
     {

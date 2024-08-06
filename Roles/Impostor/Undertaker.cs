@@ -1,6 +1,6 @@
-﻿using static EHR.Options;
+﻿using static TOC.Options;
 
-namespace EHR.Impostor
+namespace TOC.Impostor
 {
     internal class Undertaker : RoleBase
     {

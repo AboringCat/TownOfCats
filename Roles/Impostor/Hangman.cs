@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using AmongUs.GameOptions;
-using EHR.Crewmate;
-using static EHR.Options;
+using TOC.Crewmate;
+using static TOC.Options;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class Hangman : RoleBase
 {

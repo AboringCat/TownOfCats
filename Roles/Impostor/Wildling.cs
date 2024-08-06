@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using Hazel;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Impostor;
+namespace TOC.Impostor;
 
 public class Wildling : RoleBase
 {
