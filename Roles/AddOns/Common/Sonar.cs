@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace EHR.AddOns.Common
+namespace TOC.AddOns.Common
 {
     public class Sonar : IAddon
     {

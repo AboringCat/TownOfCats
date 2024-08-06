@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EHR.AddOns.Common
+namespace TOC.AddOns.Common
 {
     internal class Stained : IAddon
     {

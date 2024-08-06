@@ -1,6 +1,6 @@
-﻿using static EHR.Options;
+﻿using static TOC.Options;
 
-namespace EHR.AddOns.Crewmate
+namespace TOC.AddOns.Crewmate
 {
     internal class Bloodlust : IAddon
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using AmongUs.GameOptions;
 using UnityEngine;
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.AddOns.Crewmate;
+namespace TOC.AddOns.Crewmate;
 
 public class Workhorse : IAddon
 {

@@ -1,4 +1,4 @@
-﻿namespace EHR.AddOns
+﻿namespace TOC.AddOns
 {
     internal interface IAddon
     {

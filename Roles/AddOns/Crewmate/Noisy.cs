@@ -1,4 +1,4 @@
-﻿namespace EHR.AddOns.Crewmate
+﻿namespace TOC.AddOns.Crewmate
 {
     public class Noisy : IAddon
     {

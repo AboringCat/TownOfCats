@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using EHR.Impostor;
-using static EHR.Options;
+using TOC.Impostor;
+using static TOC.Options;
 
-namespace EHR.AddOns.Common
+namespace TOC.AddOns.Common
 {
     internal class Disco : IAddon
     {

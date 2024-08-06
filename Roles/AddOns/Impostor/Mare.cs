@@ -1,6 +1,6 @@
-﻿using static EHR.Options;
+﻿using static TOC.Options;
 
-namespace EHR.AddOns.Impostor
+namespace TOC.AddOns.Impostor
 {
     internal class Mare : IAddon
     {

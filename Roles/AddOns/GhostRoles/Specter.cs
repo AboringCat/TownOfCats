@@ -1,6 +1,6 @@
 ﻿using AmongUs.GameOptions;
 
-namespace EHR.AddOns.GhostRoles
+namespace TOC.AddOns.GhostRoles
 {
     // TOU-R Phantom
     internal class Specter : IGhostRole

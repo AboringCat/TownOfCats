@@ -1,4 +1,4 @@
-﻿namespace EHR.AddOns.Common
+﻿namespace TOC.AddOns.Common
 {
     internal class Avanger : IAddon
     {

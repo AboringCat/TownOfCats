@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace EHR.AddOns.GhostRoles
+namespace TOC.AddOns.GhostRoles
 {
     internal class Warden : IGhostRole
     {

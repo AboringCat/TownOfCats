@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EHR.AddOns.Common
+namespace TOC.AddOns.Common
 {
     public class Messenger : IAddon
     {

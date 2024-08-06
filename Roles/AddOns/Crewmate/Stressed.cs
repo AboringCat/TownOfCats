@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
+using TOC.Modules;
 using Hazel;
-using static EHR.Options;
-using static EHR.Translator;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.AddOns.Crewmate
+namespace TOC.AddOns.Crewmate
 {
     public class Stressed : IAddon
     {

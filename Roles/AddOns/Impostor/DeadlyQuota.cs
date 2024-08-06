@@ -1,4 +1,4 @@
-﻿namespace EHR.AddOns.Impostor
+﻿namespace TOC.AddOns.Impostor
 {
     internal class DeadlyQuota : IAddon
     {

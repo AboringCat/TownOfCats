@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using EHR.Modules;
-using static EHR.Options;
+using TOC.Modules;
+using static TOC.Options;
 
-namespace EHR.AddOns.Common
+namespace TOC.AddOns.Common
 {
     public class DoubleShot : IAddon
     {
