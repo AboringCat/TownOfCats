@@ -1,5 +1,5 @@
-<h1 align="center">Endless Host Roles</h1>
-<h5 align="center">Previously known as TOHE+</h5>
+<h1 align="center">TownOfCats</h1>
+<h5 align="center">based from EHR</h5>
 
 <br>
 
@@ -18,21 +18,15 @@
 
 <a href="https://sites.google.com/view/ehr-au" target="_blank"><img src="https://img.shields.io/badge/Website%20-%231DA1F2.svg?&style=for-the-badge&logo=vuedotjs&logoColor=white&color=3aa675"/></a>
 <a href="https://discord.gg/m3ayxfumC8" target="_blank"><img src="https://img.shields.io/badge/Discord%20-%231DA1F2.svg?&style=for-the-badge&logo=discord&logoColor=white&color=5662f6"/></a>
-<a href="https://github.com/Gurge44/EndlessHostRoles/releases/latest" target="_blank"><img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/></a>
+<a href="https://github.com/Gurge44/EndlessHostRoles/releases/latest" target="_blank"><img src="https://img.shields.io/badge/Latest Version%20-%231DA1F2.svg?&style=for-the-badge&logo=github&logoColor=white&color=181717"/></a>  
 
-</p>
 
-<p align="left" style="font-size: 10px"><i>Image by oCelestino & Seleneous on Discord</i></p>
----
 
-<br>
 
-#### Over 350 roles and add-ons, 7 custom game modes, and a custom team assigner application, making EHR the most extensive mod for Among Us. And it's all free, and only the host needs to have the mod installed for the entire lobby to play!
 
-## Visit our website for a list of roles, their descriptions and more features: [EHR](https://sites.google.com/view/ehr-au)
+####   Over 350 roles and add-ons, 7 custom game modes, and a custom team assigner application, making EHR the most extensive mod for Among Us. And it's all free, and only the host needs to have the mod installed for the entire lobby to play!  
 
-- The website is a work in progress and doesn't have all roles listed yet, but it's a good place to start if you're
-  looking for more information about the mod.
+
 
 ## List of Roles <span style="font-size: 12px;">(excluding Hide and Seek roles and vanilla roles)</span>
 
