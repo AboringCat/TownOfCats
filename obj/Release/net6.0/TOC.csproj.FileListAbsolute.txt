@@ -1,0 +1,14 @@
+D:\works\TownOfCats\bin\Release\net6.0\TOC.deps.json
+D:\works\TownOfCats\bin\Release\net6.0\TOC.dll
+D:\works\TownOfCats\bin\Release\net6.0\TOC.pdb
+D:\works\TownOfCats\obj\Release\net6.0\GitInfo.cache
+D:\works\TownOfCats\obj\Release\net6.0\TOC.csproj.AssemblyReference.cache
+D:\works\TownOfCats\obj\Release\net6.0\TOC.GeneratedMSBuildEditorConfig.editorconfig
+D:\works\TownOfCats\obj\Release\net6.0\TOC.AssemblyInfoInputs.cache
+D:\works\TownOfCats\obj\Release\net6.0\TOC.AssemblyInfo.cs
+D:\works\TownOfCats\obj\Release\net6.0\TOC.csproj.CoreCompileInputs.cache
+D:\works\TownOfCats\obj\Release\net6.0\TOC.sourcelink.json
+D:\works\TownOfCats\obj\Release\net6.0\TOC.dll
+D:\works\TownOfCats\obj\Release\net6.0\refint\TOC.dll
+D:\works\TownOfCats\obj\Release\net6.0\TOC.pdb
+D:\works\TownOfCats\obj\Release\net6.0\ref\TOC.dll

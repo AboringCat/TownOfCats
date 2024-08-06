@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)thisassembly.constants\1.4.1\build\netstandard2.0\ThisAssembly.Constants.targets" Condition="Exists('$(NuGetPackageRoot)thisassembly.constants\1.4.1\build\netstandard2.0\ThisAssembly.Constants.targets')" />
+    <Import Project="$(NuGetPackageRoot)system.text.json\6.0.8\buildTransitive\netcoreapp3.1\System.Text.Json.targets" Condition="Exists('$(NuGetPackageRoot)system.text.json\6.0.8\buildTransitive\netcoreapp3.1\System.Text.Json.targets')" />
+    <Import Project="$(NuGetPackageRoot)gitinfo\3.3.4\buildTransitive\GitInfo.targets" Condition="Exists('$(NuGetPackageRoot)gitinfo\3.3.4\buildTransitive\GitInfo.targets')" />
+  </ImportGroup>
+</Project>

@@ -1,0 +1,123 @@
+is_global = true
+build_property.ThisAssemblyNamespace = 
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = TOC
+build_property.ProjectDir = D:\works\TownOfCats\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.GitIsDirty = 1
+
+[D:/works/TownOfCats/IsDirtyString]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = true
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/RepositoryUrl]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = https://github.com/AboringCat/TownOfCats.git
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/Branch]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = Dev-Unstable
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/Commit]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 45326eb6
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/Sha]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 45326eb6eea4343d32f66288f20ee586a80e9abe
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/CommitDate]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 2024-08-06T09:09:10+08:00
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/Commits]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 195
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/Tag]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = v4.3.0-195-g45326eb6
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/BaseTag]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = v4.3.0
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/BaseVersion.Major]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 4
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/BaseVersion.Minor]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 3
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/BaseVersion.Patch]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 0
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/SemVer.Major]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 4
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/SemVer.Minor]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 3
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/SemVer.Patch]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 195
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/SemVer.Label]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/SemVer.DashLabel]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = 
+build_metadata.Constant.Root = Git
+
+[D:/works/TownOfCats/SemVer.Source]
+build_metadata.AdditionalFiles.SourceItemType = Constant
+build_metadata.Constant.Comment = 
+build_metadata.Constant.Value = Tag
+build_metadata.Constant.Root = Git
