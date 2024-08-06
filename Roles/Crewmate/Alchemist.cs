@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using Hazel;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     using static Options;
     using static Translator;

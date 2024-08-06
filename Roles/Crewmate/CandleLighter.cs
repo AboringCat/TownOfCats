@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AmongUs.GameOptions;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     using static Options;
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Dad : RoleBase
     {

@@ -1,6 +1,6 @@
 ﻿using AmongUs.GameOptions;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Altruist : RoleBase
     {
@@ -24,7 +24,7 @@ namespace EHR.Crewmate
             if (killer == null) return;
             if (!killer.GetCustomRole().IsImpostor()) return;
 
-            killer.RpcSetCustomRole(killer.Is(RoleTypes.Shapeshifter) ? CustomRoles.ShapeshifterEHR : killer.IsImpostor() ? CustomRoles.ImpostorEHR : CustomRoles.Amnesiac);
+            killer.RpcSetCustomRole(killer.Is(RoleTypes.Shapeshifter) ? CustomRoles.ShapeshifterTOC : killer.IsImpostor() ? CustomRoles.ImpostorTOC : CustomRoles.Amnesiac);
         }
     }
 }

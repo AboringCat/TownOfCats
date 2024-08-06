@@ -2,10 +2,10 @@
 using System.Linq;
 using AmongUs.GameOptions;
 using UnityEngine;
-using static EHR.Options;
-using static EHR.Translator;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Analyst : RoleBase
     {

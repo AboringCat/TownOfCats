@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
-using static EHR.Options;
-using static EHR.Translator;
+using TOC.Modules;
+using static TOC.Options;
+using static TOC.Translator;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class Divinator : RoleBase
 {

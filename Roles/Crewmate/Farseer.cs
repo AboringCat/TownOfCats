@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using AmongUs.GameOptions;
-using EHR.Impostor;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Impostor;
+using TOC.Modules;
+using TOC.Neutral;
 using UnityEngine;
-using static EHR.Options;
-using static EHR.Translator;
-using static EHR.Utils;
+using static TOC.Options;
+using static TOC.Translator;
+using static TOC.Utils;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     public class Farseer : RoleBase
     {

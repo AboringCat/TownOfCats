@@ -1,6 +1,6 @@
 ﻿using AmongUs.GameOptions;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Convener : RoleBase
     {

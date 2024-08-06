@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
-using EHR.Patches;
+using TOC.Modules;
+using TOC.Patches;
 using Hazel;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Adventurer : RoleBase
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace EHR.Crewmate
+namespace TOC.Crewmate
 {
     internal class Beacon : RoleBase
     {

@@ -1,6 +1,6 @@
-using static EHR.Options;
+using static TOC.Options;
 
-namespace EHR.Crewmate;
+namespace TOC.Crewmate;
 
 public class Chameleon : RoleBase
 {
