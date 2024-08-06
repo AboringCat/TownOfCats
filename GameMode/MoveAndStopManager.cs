@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.AddOns.Common;
+using TOC.AddOns.Common;
 using HarmonyLib;
 using UnityEngine;
-using static EHR.Translator;
+using static TOC.Translator;
 
-namespace EHR;
+namespace TOC;
 
 public class Counter(int totalGreenTime, int totalRedTime, long startTimeStamp, char symbol, bool isRed, bool isYellow = false, bool moveAndStop = true)
 {

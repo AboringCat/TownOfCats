@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EHR.Modules;
-using EHR.Neutral;
+using TOC.Modules;
+using TOC.Neutral;
 using HarmonyLib;
 using Hazel;
 using UnityEngine;
-using static EHR.RandomSpawn;
+using static TOC.RandomSpawn;
 
-namespace EHR;
+namespace TOC;
 
 internal static class SoloKombatManager
 {

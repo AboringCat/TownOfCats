@@ -1,4 +1,4 @@
-﻿namespace EHR.GameMode.HideAndSeekRoles
+﻿namespace TOC.GameMode.HideAndSeekRoles
 {
     internal class Fox : RoleBase, IHideAndSeekRole
     {

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using AmongUs.GameOptions;
-using EHR.GameMode.HideAndSeekRoles;
+using TOC.GameMode.HideAndSeekRoles;
 using HarmonyLib;
 using UnityEngine;
 
-namespace EHR
+namespace TOC
 {
     internal static class HnSManager
     {
