@@ -29,20 +29,20 @@ public class Main : BasePlugin
 {
     private const string DebugKeyHash = "c0fd562955ba56af3ae20d7ec9e64c664f0facecef4b3e366e109306adeae29d";
     private const string DebugKeySalt = "59687b";
-    private const string PluginGuid = "com.gurge44.endlesshostroles";
-    public const string PluginVersion = "4.4.0";
-    public const string PluginDisplayVersion = "4.4.0";
-    public const string NeutralColor = "#ffab1b";
-    public const string ImpostorColor = "#ff1919";
-    public const string CrewmateColor = "#8cffff";
+    private const string PluginGuid = "com.AboringCat.TownOfCats";
+    public const string PluginVersion = "0.1.0";
+    public const string PluginDisplayVersion = "1.0-Unstable1";
+    public const string NeutralColor = "#7FFF00";
+    public const string ImpostorColor = "#00EEEE";
+    public const string CrewmateColor = "#BA55D3";
 
     public const float MinSpeed = 0.0001f;
 
     // == プログラム設定 / Program Config ==
-    public const string ModName = "EHR";
-    public const string ModColor = "#00ffff";
+    public const string ModName = "TOC";
+    public const string ModColor = "#00CED1";
     public const bool AllowPublicRoom = true;
-    public const string ForkId = "EHR";
+    public const string ForkId = "TOC";
     public const string SupportedAUVersion = "2024.6.18";
     public static readonly Version Version = Version.Parse(PluginVersion);
     public static ManualLogSource Logger;
