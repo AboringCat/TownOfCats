@@ -546,7 +546,7 @@ static class ExtendedPlayerControl
 
     public static string GetNameWithRole(this PlayerControl player, bool forUser = false)
     {
-        return $"{player?.Data?.PlayerName}" + (GameStates.IsInGame && Options.CurrentGameMode is not CustomGameMode.FFA and not CustomGameMode.MoveAndStop and not CustomGameMode.HotPotato and not CustomGameMode.Speedrun ? $" ({player?.GetAllRoleName(forUser).RemoveHtmlTags().Replace('\n', ' ')})" : string.Empty);
+        return $"{player?.Data?.PlayerName}" + (GameStates.IsInGame && Options.CurrentGameMode is not CustomGameMode.FFA and not CustomGameMode.MoveAndStop and not CustomGameMode.HotPotato and not CustomGameMode.Speedrun and not CustomGameMode.CaptureTheFlag ? $" ({player?.GetAllRoleName(forUser).RemoveHtmlTags().Replace('\n', ' ')})" : string.Empty);
     }
 
     public static string GetRoleColorCode(this PlayerControl player)
@@ -656,16 +656,18 @@ static class ExtendedPlayerControl
     public static bool CanUseKillButton(this PlayerControl pc)
     {
         if (!pc.IsAlive()) return false;
-        if (Mastermind.ManipulatedPlayers.ContainsKey(pc.PlayerId)) return true;
-        if (Penguin.IsVictim(pc)) return false;
 
         switch (Options.CurrentGameMode)
         {
             case CustomGameMode.HotPotato or CustomGameMode.MoveAndStop:
             case CustomGameMode.Speedrun when !SpeedrunManager.CanKill.Contains(pc.PlayerId):
                 return false;
+            case CustomGameMode.CaptureTheFlag:
+                return true;
         }
 
+        if (Mastermind.ManipulatedPlayers.ContainsKey(pc.PlayerId)) return true;
+        if (Penguin.IsVictim(pc)) return false;
         if (Pelican.IsEaten(pc.PlayerId)) return false;
         if (pc.Data.Role.Role == RoleTypes.GuardianAngel) return false;
         if (pc.Is(CustomRoles.Bloodlust)) return true;
@@ -721,6 +723,8 @@ static class ExtendedPlayerControl
             CustomRoles.Potato => false,
             // Speedrun
             CustomRoles.Runner => false,
+            // Capture The Flag
+            CustomRoles.CTFPlayer => false,
 
             _ => Main.PlayerStates.TryGetValue(pc.PlayerId, out var state) && state.Role.CanUseImpostorVentButton(pc)
         };
@@ -729,7 +733,6 @@ static class ExtendedPlayerControl
     public static bool CanUseSabotage(this PlayerControl pc)
     {
         if (!pc.IsAlive() || pc.Data.Role.Role == RoleTypes.GuardianAngel) return false;
-
         return Main.PlayerStates.TryGetValue(pc.PlayerId, out var state) && state.Role.CanUseSabotage(pc);
     }
 
@@ -970,10 +973,9 @@ static class ExtendedPlayerControl
     }
 
     public static bool IsNeutralKiller(this PlayerControl player) => player.Is(CustomRoles.Bloodlust) || player.GetCustomRole().IsNK();
-    public static bool IsNeutralBenign(this PlayerControl player) => player.GetCustomRole().IsNB();
-    public static bool IsNeutralEvil(this PlayerControl player) => player.GetCustomRole().IsNE();
-    public static bool IsNeutralChaos(this PlayerControl player) => player.GetCustomRole().IsNC();
-    public static bool IsSnitchTarget(this PlayerControl player) => player.Is(CustomRoles.Bloodlust) || player.GetCustomRole().IsSnitchTarget();
+    public static bool IsNeutralBenign(this PlayerControl player) => player.GetCustomRole().GetNeutralRoleCategory() == RoleOptionType.Neutral_Benign;
+    public static bool IsNeutralEvil(this PlayerControl player) => player.GetCustomRole().GetNeutralRoleCategory() == RoleOptionType.Neutral_Evil;
+    public static bool IsSnitchTarget(this PlayerControl player) => player.Is(CustomRoles.Bloodlust) || Framer.FramedPlayers.Contains(player.PlayerId) || player.GetCustomRole().IsSnitchTarget();
     public static bool IsMadmate(this PlayerControl player) => player.Is(CustomRoles.Madmate) || player.GetCustomRole().IsMadmate();
 
     public static bool HasGhostRole(this PlayerControl player) => GhostRolesManager.AssignedGhostRoles.ContainsKey(player.PlayerId) || Main.PlayerStates.TryGetValue(player.PlayerId, out var state) && state.SubRoles.Any(x => x.IsGhostRole());
@@ -1017,7 +1019,7 @@ static class ExtendedPlayerControl
         }
 
         var State = Main.PlayerStates[target.PlayerId];
-        if (State.RealKiller.TIMESTAMP != DateTime.MinValue && NotOverRide) return; // Do not overwrite if value already exists
+        if (State.RealKiller.TimeStamp != DateTime.MinValue && NotOverRide) return; // Do not overwrite if value already exists
         byte killerId = killer == null ? byte.MaxValue : killer.PlayerId;
         RPC.SetRealKiller(target.PlayerId, killerId);
     }
@@ -1059,7 +1061,7 @@ static class ExtendedPlayerControl
 
     public static bool Is(this PlayerControl target, Team team) => team switch
     {
-        Team.Impostor => target.GetCustomRole().IsImpostorTeamV2() && !target.Is(CustomRoles.Bloodlust),
+        Team.Impostor => (target.IsMadmate() || target.GetCustomRole().IsImpostorTeamV2() || Framer.FramedPlayers.Contains(target.PlayerId)) && !target.Is(CustomRoles.Bloodlust),
         Team.Neutral => target.GetCustomRole().IsNeutralTeamV2() || target.Is(CustomRoles.Bloodlust),
         Team.Crewmate => target.GetCustomRole().IsCrewmateTeamV2(),
         Team.None => target.Is(CustomRoles.GM) || target.Is(CountTypes.None) || target.Is(CountTypes.OutOfGame),
@@ -1068,6 +1070,7 @@ static class ExtendedPlayerControl
 
     public static Team GetTeam(this PlayerControl target)
     {
+        if (Framer.FramedPlayers.Contains(target.PlayerId)) return Team.Impostor;
         var subRoles = target.GetCustomSubRoles();
         if (target.Is(CustomRoles.Bloodlust) || subRoles.Any(x => x.IsConverted())) return Team.Neutral;
         if (subRoles.Contains(CustomRoles.Madmate)) return Team.Impostor;
@@ -1076,6 +1079,8 @@ static class ExtendedPlayerControl
         if (role.IsNeutralTeamV2()) return Team.Neutral;
         return role.IsCrewmateTeamV2() ? Team.Crewmate : Team.None;
     }
+
+    public static bool IsConverted(this PlayerControl target) => target.GetCustomSubRoles().Any(x => x.IsConverted());
 
     public static bool IsAlive(this PlayerControl target)
     {

@@ -38,7 +38,7 @@ public class Lawyer : RoleBase
 
     public override bool IsEnable => playerIdList.Count > 0;
 
-    public static void SetupCustomOption()
+    public override void SetupCustomOption()
     {
         SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Lawyer);
         CanTargetImpostor = new BooleanOptionItem(Id + 10, "LawyerCanTargetImpostor", false, TabGroup.NeutralRoles).SetParent(CustomRoleSpawnChances[CustomRoles.Lawyer]);
@@ -136,6 +136,7 @@ public class Lawyer : RoleBase
 
     public override bool KnowRole(PlayerControl player, PlayerControl target)
     {
+        if (base.KnowRole(player, target)) return true;
         if (!KnowTargetRole.GetBool()) return false;
         return player.Is(CustomRoles.Lawyer) && Target.TryGetValue(player.PlayerId, out var tar) && tar == target.PlayerId;
     }

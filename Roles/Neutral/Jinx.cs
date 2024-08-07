@@ -2,7 +2,7 @@ using static EHR.Options;
 
 namespace EHR.Neutral;
 
-public class Jinx : ISettingHolder
+public class Jinx : RoleBase
 {
     private const int Id = 12200;
 
@@ -12,7 +12,9 @@ public class Jinx : ISettingHolder
     public static OptionItem JinxSpellTimes;
     public static OptionItem KillAttacker;
 
-    public void SetupCustomOption()
+    public override bool IsEnable => false;
+
+    public override void SetupCustomOption()
     {
         SetupSingleRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Jinx);
         KillCooldown = new FloatOptionItem(Id + 10, "KillCooldown", new(0f, 180f, 0.5f), 22.5f, TabGroup.NeutralRoles).SetParent(CustomRoleSpawnChances[CustomRoles.Jinx])
@@ -23,5 +25,13 @@ public class Jinx : ISettingHolder
             .SetParent(CustomRoleSpawnChances[CustomRoles.Jinx])
             .SetValueFormat(OptionFormat.Times);
         KillAttacker = new BooleanOptionItem(Id + 12, "killAttacker", true, TabGroup.NeutralRoles).SetParent(CustomRoleSpawnChances[CustomRoles.Jinx]);
+    }
+
+    public override void Init()
+    {
+    }
+
+    public override void Add(byte playerId)
+    {
     }
 }

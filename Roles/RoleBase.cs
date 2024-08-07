@@ -34,6 +34,7 @@ namespace EHR
         // This is a base class for all roles. It contains some common methods and properties that are used by all roles.
         public abstract void Init();
         public abstract void Add(byte playerId);
+        public abstract void SetupCustomOption();
 
         // Some virtual methods that trigger actions, like venting, petting, CheckMurder, etc. These are not abstract because they have a default implementation. These should also have the same name as the methods in the derived classes.
         public virtual void SetKillCooldown(byte id)
@@ -48,7 +49,7 @@ namespace EHR
 
         public virtual bool CanUseImpostorVentButton(PlayerControl pc)
         {
-            return pc.IsAlive() && (pc.Is(CustomRoleTypes.Impostor) || (pc.Is(CustomRoles.Bloodlust) && Bloodlust.CanVent.GetBool())) && Circumvent.CanUseImpostorVentButton(pc) && pc.Data.Role.Role is not RoleTypes.Crewmate and not RoleTypes.Engineer;
+            return pc.IsAlive() && (pc.Is(CustomRoleTypes.Impostor) || (pc.Is(CustomRoles.Bloodlust) && Bloodlust.CanVent.GetBool())) && Circumvent.CanUseImpostorVentButton(pc) && pc.Data.Role.Role is not RoleTypes.Engineer;
         }
 
         public virtual bool CanUseSabotage(PlayerControl pc)
@@ -74,7 +75,7 @@ namespace EHR
 
         public virtual void OnTaskComplete(PlayerControl pc, int completedTaskCount, int totalTaskCount)
         {
-            if (Options.CurrentGameMode == CustomGameMode.HideAndSeek && HnSManager.PlayerRoles[pc.PlayerId].Interface.Team == Team.Crewmate)
+            if (Options.CurrentGameMode == CustomGameMode.HideAndSeek && HnSManager.PlayerRoles[pc.PlayerId].Interface.Team == Team.Crewmate && pc.IsAlive())
             {
                 int time = GameMode.HideAndSeekRoles.Hider.TimeDecreaseOnTaskComplete.GetInt();
                 HnSManager.TimeLeft -= time;
@@ -183,6 +184,7 @@ namespace EHR
 
         public virtual bool KnowRole(PlayerControl seer, PlayerControl target)
         {
+            if (Options.NeutralsKnowEachOther.GetBool() && seer.Is(Team.Neutral) && target.Is(Team.Neutral)) return true;
             var seerRole = seer.GetCustomRole();
             return seerRole.IsNK() && seerRole == target.GetCustomRole() && seer.GetTeam() == target.GetTeam();
         }

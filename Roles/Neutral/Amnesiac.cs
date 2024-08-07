@@ -34,7 +34,7 @@ public class Amnesiac : RoleBase
 
     public override bool IsEnable => Instances.Count > 0;
 
-    public static void SetupCustomOption()
+    public override void SetupCustomOption()
     {
         SetupRoleOptions(Id, TabGroup.NeutralRoles, CustomRoles.Amnesiac);
         RememberMode = new StringOptionItem(Id + 9, "RememberMode", RememberModes, 0, TabGroup.NeutralRoles)
@@ -194,6 +194,7 @@ public class Amnesiac : RoleBase
 
     public override bool KnowRole(PlayerControl player, PlayerControl target)
     {
+        if (base.KnowRole(player, target)) return true;
         if (player.Is(CustomRoles.Refugee) && target.Is(CustomRoleTypes.Impostor)) return true;
         return player.Is(CustomRoleTypes.Impostor) && target.Is(CustomRoles.Refugee);
     }

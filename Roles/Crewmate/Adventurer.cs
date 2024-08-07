@@ -81,7 +81,7 @@ namespace EHR.Crewmate
 
         static OptionItem CreateWeaponEnabledSetting(int id, Weapon weapon) => new BooleanOptionItem(id, $"AdventurerWeaponEnabled.{weapon}", true, TabGroup.CrewmateRoles).SetParent(Options.CustomRoleSpawnChances[CustomRoles.Adventurer]);
 
-        public static void SetupCustomOption()
+        public override void SetupCustomOption()
         {
             Options.SetupRoleOptions(11330, TabGroup.CrewmateRoles, CustomRoles.Adventurer);
 
@@ -362,6 +362,7 @@ namespace EHR.Crewmate
 
         public override bool KnowRole(PlayerControl seer, PlayerControl target)
         {
+            if (base.KnowRole(seer, target)) return true;
             return RevealedPlayers.Contains(target.PlayerId);
         }
 

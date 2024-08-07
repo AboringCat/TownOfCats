@@ -50,6 +50,7 @@ public enum CustomRoles
     EvilGuesser,
     EvilTracker,
     FireWorks,
+    Framer,
     Freezer,
     Gambler,
     Gangster,
@@ -136,6 +137,8 @@ public enum CustomRoles
     Benefactor,
     Bodyguard,
     CameraMan,
+    Car,
+    Catcher,
     CyberStar, // Celebrity
     Chameleon,
     Chef,
@@ -147,6 +150,7 @@ public enum CustomRoles
     LovingCrewmate,
     LovingImpostor,
     Crusader,
+    Dad,
     Demolitionist,
     Deputy,
     Detective,
@@ -245,6 +249,7 @@ public enum CustomRoles
     Agitater,
     Amnesiac,
     Arsonist,
+    Backstabber,
     Bandit,
     Bargainer,
     Beehive,
@@ -359,6 +364,9 @@ public enum CustomRoles
 
     // Speedrun
     Runner,
+
+    // Capture The Flag
+    CTFPlayer,
 
     // GM
     GM,

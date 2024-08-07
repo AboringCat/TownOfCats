@@ -322,6 +322,10 @@ public static class GuessManager
                             if (!isUI) Utils.SendMessage(GetString("GuessSuperStar"), pc.PlayerId);
                             else pc.ShowPopUp(GetString("GuessSuperStar"));
                             return true;
+                        case CustomRoles.Backstabber when target.Is(CustomRoles.Backstabber) && Backstabber.RevealAfterKilling.GetBool() && target.GetAbilityUseLimit() == 0f:
+                            if (!isUI) Utils.SendMessage(GetString("GuessBackstabber"), pc.PlayerId);
+                            else pc.ShowPopUp(GetString("GuessBackstabber"));
+                            return true;
                         case CustomRoles.President when Main.PlayerStates[target.PlayerId].Role is President { IsRevealed: true }:
                             if (!isUI) Utils.SendMessage(GetString("GuessPresident"), pc.PlayerId);
                             else pc.ShowPopUp(GetString("GuessPresident"));
@@ -333,6 +337,7 @@ public static class GuessManager
                             return true;
                         case CustomRoles.DonutDelivery when DonutDelivery.IsUnguessable(pc, target):
                         case CustomRoles.Shifter:
+                        case CustomRoles.Car:
                         case CustomRoles.Goose when !Goose.CanBeGuessed.GetBool():
                         case CustomRoles.Disco:
                         case CustomRoles.Glow:
@@ -372,6 +377,13 @@ public static class GuessManager
                     {
                         if (!isUI) Utils.SendMessage(GetString("JailedCanOnlyGuessJailor"), pc.PlayerId, title: Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jailor), GetString("JailorTitle")));
                         else pc.ShowPopUp(Utils.ColorString(Utils.GetRoleColor(CustomRoles.Jailor), GetString("JailorTitle")) + "\n" + GetString("JailedCanOnlyGuessJailor"));
+                        return true;
+                    }
+
+                    if (Markseeker.PlayerIdList.Any(x => Main.PlayerStates[x].Role is Markseeker { TargetRevealed: true } ms && ms.MarkedId == target.PlayerId))
+                    {
+                        if (!isUI) Utils.SendMessage(GetString("GuessMarkseekerTarget"), pc.PlayerId);
+                        else pc.ShowPopUp(GetString("GuessMarkseekerTarget"));
                         return true;
                     }
 
@@ -446,15 +458,17 @@ public static class GuessManager
                     {
                         if (DoubleShot.CheckGuess(pc, isUI)) return true;
 
-                        guesserSuicide = true;
-                        Logger.Msg($"{guesserSuicide}", "guesserSuicide1");
+                        if (!isUI) Utils.SendMessage(GetString("GuessCrewRole"), pc.PlayerId, Utils.ColorString(Color.cyan, GetString("MessageFromGurge44")));
+                        else pc.ShowPopUp(Utils.ColorString(Color.cyan, GetString("MessageFromGurge44")) + "\n" + GetString("GuessCrewRole"));
+                        return true;
                     }
                     else if (pc.Is(CustomRoles.EvilGuesser) && target.Is(CustomRoleTypes.Impostor) && !Options.EGCanGuessImp.GetBool())
                     {
                         if (DoubleShot.CheckGuess(pc, isUI)) return true;
 
-                        guesserSuicide = true;
-                        Logger.Msg($"{guesserSuicide}", "guesserSuicide2");
+                        if (!isUI) Utils.SendMessage(GetString("GuessImpRole"), pc.PlayerId, Utils.ColorString(Color.cyan, GetString("MessageFromGurge44")));
+                        else pc.ShowPopUp(Utils.ColorString(Color.cyan, GetString("MessageFromGurge44")) + "\n" + GetString("GuessImpRole"));
+                        return true;
                     }
                     else if (!target.Is(role))
                     {
@@ -464,7 +478,7 @@ public static class GuessManager
                         Logger.Msg($"{guesserSuicide}", "guesserSuicide3");
                     }
 
-                    if (Options.GuesserDoesntDieOnMisguess.GetBool())
+                    if (guesserSuicide && Options.GuesserDoesntDieOnMisguess.GetBool())
                     {
                         if (!isUI) Utils.SendMessage(GetString("MisguessButNoSuicide"), pc.PlayerId, Utils.ColorString(Color.yellow, GetString("MessageFromGurge44")));
                         else pc.ShowPopUp(Utils.ColorString(Color.yellow, GetString("MessageFromGurge44")) + "\n" + GetString("MisguessButNoSuicide"));

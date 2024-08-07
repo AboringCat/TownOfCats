@@ -422,6 +422,7 @@ class SetHudActivePatch
                 __instance.ImpostorVentButton?.ToggleVisible(false);
                 __instance.AbilityButton?.ToggleVisible(false);
                 return;
+            case CustomGameMode.CaptureTheFlag:
             case CustomGameMode.FFA:
                 __instance.ReportButton?.ToggleVisible(false);
                 __instance.SabotageButton?.ToggleVisible(false);
@@ -589,7 +590,7 @@ class TaskPanelBehaviourPatch
         if (!player.GetCustomRole().IsVanilla())
         {
             var RoleWithInfo = $"<size=80%>{player.GetCustomRole().ToColoredString()}:\r\n{player.GetRoleInfo()}</size>";
-            if (Options.CurrentGameMode == CustomGameMode.MoveAndStop) RoleWithInfo = $"{GetString("TaskerInfo")}\r\n";
+            if (Options.CurrentGameMode == CustomGameMode.MoveAndStop) RoleWithInfo = $"<size=60%>{GetString("TaskerInfo")}</size>\r\n";
 
             var AllText = Utils.ColorString(player.GetRoleColor(), RoleWithInfo);
 
@@ -603,7 +604,7 @@ class TaskPanelBehaviourPatch
                         const int max = 3;
                         var s = subRoles.Take(max).Select(x => Utils.ColorString(Utils.GetRoleColor(x), $"\r\n\r\n{x.ToColoredString()}:\r\n{GetString($"{x}Info")}"));
                         AllText += s.Aggregate("<size=70%>", (current, next) => current + next) + "</size>";
-                        int chunk = subRoles.Any(x => x.ToString().Contains(' ')) ? 3 : 4;
+                        int chunk = subRoles.Any(x => GetString(x.ToString()).Contains(' ')) ? 3 : 4;
                         if (subRoles.Count > max) AllText += $"\r\n<size=70%>....\r\n({subRoles.Skip(max).Chunk(chunk).Select(x => x.Join(r => r.ToColoredString())).Join(delimiter: ",\r\n")})</size>";
                     }
 
@@ -644,42 +645,16 @@ class TaskPanelBehaviourPatch
                     AllText += $"\r\n{GetString("PVP.RCO")}: {SoloKombatManager.PlayerHPReco[lpc.PlayerId]}";
                     AllText += "\r\n";
 
-                    Dictionary<byte, string> SummaryText = [];
-                    foreach (var id in Main.PlayerStates.Keys)
-                    {
-                        string name = Main.AllPlayerNames[id].RemoveHtmlTags().Replace("\r\n", string.Empty);
-                        string summary = $"{Utils.GetProgressText(id)}  {Utils.ColorString(Main.PlayerColors[id], name)}";
-                        if (Utils.GetProgressText(id).Trim() == string.Empty) continue;
-                        SummaryText[id] = summary;
-                    }
+                    AllText += Main.PlayerStates.Keys.OrderBy(SoloKombatManager.GetRankOfScore).Aggregate("<size=70%>", (s, x) => $"{s}\r\n{SoloKombatManager.GetRankOfScore(x)}. {x.ColoredPlayerName()} -{string.Format(GetString("KillCount"), SoloKombatManager.KBScore.GetValueOrDefault(x, 0))}");
 
-                    List<(int, byte)> list = [];
-                    foreach (var id in Main.PlayerStates.Keys) list.Add((SoloKombatManager.GetRankOfScore(id), id));
-                    list.Sort();
-                    AllText = list.Where(x => SummaryText.ContainsKey(x.Item2)).Aggregate(AllText, (current, id) => current + "\r\n" + SummaryText[id.Item2]);
-
-                    AllText = $"<size=70%>{AllText}</size>";
-
+                    AllText += "</size>";
                     break;
 
                 case CustomGameMode.FFA:
 
-                    Dictionary<byte, string> SummaryText2 = [];
-                    foreach (var id in Main.PlayerStates.Keys)
-                    {
-                        string name = Main.AllPlayerNames[id].RemoveHtmlTags().Replace("\r\n", string.Empty);
-                        string summary = $"{Utils.GetProgressText(id)}  {Utils.ColorString(Main.PlayerColors[id], name)}";
-                        if (Utils.GetProgressText(id).Trim() == string.Empty) continue;
-                        SummaryText2[id] = summary;
-                    }
+                    AllText += Main.PlayerStates.Keys.OrderBy(FFAManager.GetRankOfScore).Aggregate("<size=70%>", (s, x) => $"{s}\r\n{FFAManager.GetRankOfScore(x)}. {x.ColoredPlayerName()} -{string.Format(GetString("KillCount"), FFAManager.KillCount.GetValueOrDefault(x, 0))}");
 
-                    List<(int, byte)> list2 = [];
-                    foreach (var id in Main.PlayerStates.Keys) list2.Add((FFAManager.GetRankOfScore(id), id));
-                    list2.Sort();
-                    AllText = list2.Where(x => SummaryText2.ContainsKey(x.Item2)).Aggregate(AllText, (current, id) => current + "\r\n" + SummaryText2[id.Item2]);
-
-                    AllText = $"<size=70%>{AllText}</size>";
-
+                    AllText += "</size>";
                     break;
 
                 case CustomGameMode.MoveAndStop:
@@ -725,7 +700,7 @@ class TaskPanelBehaviourPatch
                 case CustomGameMode.HotPotato:
 
                     List<string> SummaryText4 = [];
-                    SummaryText4.AddRange(from id in Main.PlayerStates.Keys let pc = Utils.GetPlayerById(id) let name = pc.GetRealName().RemoveHtmlTags().Replace("\r\n", string.Empty) let alive = pc.IsAlive() select $"{(!alive ? "<size=70%><#777777>" : "<size=80%>")}{HotPotatoManager.GetIndicator(id)}{Utils.ColorString(Main.PlayerColors[id], name)}{(!alive ? $"</color>  <#ff0000>{GetString("Dead")}</color></size>" : "</size>")}");
+                    SummaryText4.AddRange(from id in Main.PlayerStates.Keys let pc = Utils.GetPlayerById(id) let name = pc.GetRealName().RemoveHtmlTags().Replace("\r\n", string.Empty) let alive = pc.IsAlive() select $"{(!alive ? "<size=80%><#777777>" : "<size=80%>")}{HotPotatoManager.GetIndicator(id)}{Utils.ColorString(Main.PlayerColors[id], name)}{(!alive ? $"</color>  <#ff0000>{GetString("Dead")}</color></size>" : "</size>")}");
 
                     AllText += $"\r\n\r\n{string.Join('\n', SummaryText4)}";
 

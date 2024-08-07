@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using AmongUs.GameOptions;
 using EHR.AddOns.Common;
 using EHR.AddOns.Crewmate;
@@ -225,9 +224,13 @@ class CheckMurderPatch
             case CustomGameMode.HideAndSeek:
                 HnSManager.OnCheckMurder(killer, target);
                 return false;
+            case CustomGameMode.CaptureTheFlag:
+                CTFManager.OnCheckMurder(killer, target);
+                return false;
         }
 
         if (ToiletMaster.OnAnyoneCheckMurderStart(killer, target)) return false;
+        if (Dad.OnAnyoneCheckMurderStart(target)) return false;
 
         Simon.RemoveTarget(killer, Simon.Instruction.Kill);
 
@@ -1021,7 +1024,7 @@ class ReportDeadBodyPatch
             if (QuizMaster.On)
             {
                 QuizMaster.Data.LastReporterName = player.GetRealName();
-                QuizMaster.Data.LastReportedPlayer = (Main.PlayerColors[target.PlayerId], target.GetPlayerColorString(), target.Object);
+                QuizMaster.Data.LastReportedPlayer = (Palette.GetColorName(target.DefaultOutfit.ColorId), target.Object);
                 if (MeetingStates.FirstMeeting) QuizMaster.Data.FirstReportedBodyPlayerName = target.Object.GetRealName();
             }
         }
@@ -1030,6 +1033,20 @@ class ReportDeadBodyPatch
         {
             if (MeetingStates.FirstMeeting) QuizMaster.Data.NumPlayersDeadFirstRound = Main.AllPlayerControls.Count(x => x.Data.IsDead && !x.Is(CustomRoles.GM));
             QuizMaster.Data.NumMeetings++;
+        }
+
+        if (Main.LoversPlayers.Any(x => x.IsAlive()) && Main.IsLoversDead && Lovers.LoverDieConsequence.GetValue() == 1)
+        {
+            var aliveLover = Main.LoversPlayers.First(x => x.IsAlive());
+            switch (Lovers.LoverSuicideTime.GetValue())
+            {
+                case 1:
+                    aliveLover.Suicide(PlayerState.DeathReason.FollowingSuicide);
+                    break;
+                case 2:
+                    CheckForEndVotingPatch.TryAddAfterMeetingDeathPlayers(PlayerState.DeathReason.FollowingSuicide, aliveLover.PlayerId);
+                    break;
+            }
         }
 
         Enigma.OnReportDeadBody(player, target);
@@ -1203,7 +1220,7 @@ class FixedUpdatePatch
         }
     }
 
-    public static Task DoPostfix(PlayerControl __instance)
+    public static void DoPostfix(PlayerControl __instance)
     {
         var player = __instance;
         var playerId = player.PlayerId;
@@ -1456,6 +1473,13 @@ class FixedUpdatePatch
                 var seer = PlayerControl.LocalPlayer;
                 var target = __instance;
 
+                if (target.Is(CustomRoles.Car))
+                {
+                    target.cosmetics.nameText.text = Car.Name;
+                    RoleText.enabled = false;
+                    return;
+                }
+
                 bool self = seer.PlayerId == target.PlayerId;
 
                 Mark.Clear();
@@ -1660,6 +1684,9 @@ class FixedUpdatePatch
                     case CustomGameMode.HideAndSeek:
                         Suffix.Append(HnSManager.GetSuffixText(seer, target));
                         break;
+                    case CustomGameMode.CaptureTheFlag:
+                        Suffix.Append(CTFManager.GetSuffixText(seer, target));
+                        break;
                 }
 
                 if (Options.CurrentGameMode == CustomGameMode.SoloKombat)
@@ -1717,8 +1744,6 @@ class FixedUpdatePatch
                 RoleText.transform.SetLocalY(0.2f);
             }
         }
-
-        return Task.CompletedTask;
     }
 
     public static void AddExtraAbilityUsesOnFinishedTasks(PlayerControl player)
@@ -1742,10 +1767,19 @@ class FixedUpdatePatch
 
     public static void LoversSuicide(byte deathId = 0x7f, bool isExiled = false)
     {
-        if (!Lovers.LoverSuicide.GetBool() || Main.IsLoversDead || !Main.LoversPlayers.Any(player => player.Data.IsDead && player.PlayerId == deathId)) return;
+        if (Lovers.LoverDieConsequence.GetValue() == 0 || Main.IsLoversDead || !Main.LoversPlayers.Any(player => player.Data.IsDead && player.PlayerId == deathId)) return;
 
         Main.IsLoversDead = true;
         var partnerPlayer = Main.LoversPlayers.First(player => player.PlayerId != deathId && !player.Data.IsDead);
+
+        if (Lovers.LoverDieConsequence.GetValue() == 2)
+        {
+            partnerPlayer.MarkDirtySettings();
+            deathId.GetPlayer()?.MarkDirtySettings();
+            return;
+        }
+
+        if (Lovers.LoverSuicideTime.GetValue() != 0 && !isExiled) return;
 
         if (isExiled) CheckForEndVotingPatch.TryAddAfterMeetingDeathPlayers(PlayerState.DeathReason.FollowingSuicide, partnerPlayer.PlayerId);
         else partnerPlayer.Suicide(PlayerState.DeathReason.FollowingSuicide);
@@ -1990,18 +2024,12 @@ class CoEnterVentPatch
     }
 }
 
-//[HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.SetName))]
-//class SetNamePatch
-//{
-//    public static void Postfix(/*PlayerControl __instance, [HarmonyArgument(0)] string name*/)
-//    {
-//    }
-//}
 [HarmonyPatch(typeof(GameData), nameof(GameData.CompleteTask))]
 class GameDataCompleteTaskPatch
 {
     public static void Postfix(PlayerControl pc /*, uint taskId*/)
     {
+        if (GameStates.IsMeeting) return;
         Logger.Info($"TaskComplete: {pc.GetNameWithRole().RemoveHtmlTags()}", "CompleteTask");
         Main.PlayerStates[pc.PlayerId].UpdateTask(pc);
         NotifyRoles(SpecifySeer: pc, SpecifyTarget: pc);
@@ -2013,11 +2041,13 @@ class PlayerControlCompleteTaskPatch
 {
     public static bool Prefix(PlayerControl __instance)
     {
+        if (GameStates.IsMeeting) return false;
         return !Workhorse.OnCompleteTask(__instance) && Capitalism.AddTaskForPlayer(__instance); // Cancel task win
     }
 
     public static void Postfix(PlayerControl __instance, [HarmonyArgument(0)] uint idx)
     {
+        if (GameStates.IsMeeting) return;
         if (__instance != null && __instance.IsAlive()) Benefactor.OnTaskComplete(__instance, __instance.myTasks[(Index)Convert.ToInt32(idx)] as PlayerTask);
 
         if (__instance == null) return;
@@ -2032,8 +2062,7 @@ class PlayerControlCompleteTaskPatch
             NotifyRoles(SpecifySeer: __instance, ForceLoop: true);
         }
 
-        if (isTaskFinish &&
-            __instance.GetCustomRole() is CustomRoles.Doctor or CustomRoles.Sunnyboy or CustomRoles.SpeedBooster)
+        if (isTaskFinish && __instance.GetCustomRole() is CustomRoles.Doctor or CustomRoles.Sunnyboy or CustomRoles.SpeedBooster)
         {
             // Execute CustomSyncAllSettings at the end of the task only for matches with sunnyboy, speed booster, or doctor.
             MarkEveryoneDirtySettings();

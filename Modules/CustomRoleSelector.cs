@@ -59,6 +59,9 @@ internal static class CustomRoleSelector
             case CustomGameMode.Speedrun:
                 AssignRoleToEveryone(CustomRoles.Runner);
                 return;
+            case CustomGameMode.CaptureTheFlag:
+                AssignRoleToEveryone(CustomRoles.CTFPlayer);
+                return;
             case CustomGameMode.HideAndSeek:
                 HnSManager.AssignRoles();
                 RoleResult = HnSManager.PlayerRoles.ToDictionary(x => Utils.GetPlayerById(x.Key), x => x.Value.Role);
@@ -94,6 +97,7 @@ internal static class CustomRoleSelector
             if (role.IsVanilla() || chance == 0 || role.IsAdditionRole() || (role.OnlySpawnsWithPets() && !Options.UsePets.GetBool()) || (role != CustomRoles.Randomizer && role.IsCrewmate() && Options.AprilFoolsMode.GetBool()) || HnSManager.AllHnSRoles.Contains(role)) continue;
             switch (role)
             {
+                case CustomRoles.Doctor when Options.EveryoneSeesDeathReasons.GetBool():
                 case CustomRoles.LovingCrewmate or CustomRoles.LovingImpostor when !LoversData.Spawning:
                 case CustomRoles.Commander when optImpNum <= 1 && Commander.CannotSpawnAsSoloImp.GetBool():
                 case CustomRoles.Changeling when Changeling.GetAvailableRoles(check: true).Count == 0:
@@ -213,6 +217,7 @@ internal static class CustomRoleSelector
                 Roles[RoleAssignType.NonKillingNeutral].DoIf(x => x.Role == role, x => x.AssignedCount++);
                 readyNonNeutralKillingNum++;
             }
+            else Roles[RoleAssignType.Crewmate].DoIf(x => x.Role == role, x => x.AssignedCount++);
 
             readyRoleNum++;
 
@@ -615,6 +620,7 @@ internal static class CustomRoleSelector
             if (!role.IsAdditionRole() || role.IsGhostRole()) continue;
             switch (role)
             {
+                case CustomRoles.Autopsy when Options.EveryoneSeesDeathReasons.GetBool():
                 case CustomRoles.Mare or CustomRoles.Glow or CustomRoles.Sleep when Main.CurrentMap == MapNames.Fungle:
                 case CustomRoles.Madmate when Options.MadmateSpawnMode.GetInt() != 0:
                 case CustomRoles.Lovers or CustomRoles.LastImpostor or CustomRoles.Workhorse or CustomRoles.Undead:

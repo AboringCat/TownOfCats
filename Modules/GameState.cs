@@ -53,6 +53,7 @@ public class PlayerState(byte playerId)
         WrongAnswer,
         Consumed,
         BadLuck,
+        Asthma,
 
         etc = -1
     }
@@ -63,7 +64,7 @@ public class PlayerState(byte playerId)
     public CountTypes countTypes = CountTypes.Crew;
     public PlainShipRoom LastRoom;
     public CustomRoles MainRole = CustomRoles.NotAssigned;
-    public (DateTime TIMESTAMP, byte ID) RealKiller = (DateTime.MinValue, byte.MaxValue);
+    public (DateTime TimeStamp, byte ID) RealKiller = (DateTime.MinValue, byte.MaxValue);
     public RoleBase Role = new VanillaRole();
     public List<CustomRoles> SubRoles = [];
     public Dictionary<byte, string> TargetColorData = [];
@@ -91,6 +92,9 @@ public class PlayerState(byte playerId)
                 _ => role.GetCountTypes()
             };
         }
+
+        if (CustomTeamManager.GetCustomTeam(PlayerId) != null && !CustomTeamManager.IsSettingEnabledForPlayerTeam(PlayerId, CTAOption.WinWithOriginalTeam))
+            countTypes = CountTypes.CustomTeam;
 
         SubRoles.ForEach(SetAddonCountTypes);
 
@@ -121,6 +125,9 @@ public class PlayerState(byte playerId)
                 HudManager.Instance.SetHudActive(true);
                 RemoveDisableDevicesPatch.UpdateDisableDevices();
             }
+
+            if (!role.Is(Team.Impostor)) SubRoles.ToArray().DoIf(x => x.IsImpOnlyAddon(), RemoveSubRole);
+            if (role is CustomRoles.Sidekick or CustomRoles.Necromancer or CustomRoles.Deathknight) RemoveSubRole(CustomRoles.Nimble);
         }
 
         CheckMurderPatch.TimeSinceLastKill.Remove(PlayerId);
@@ -150,6 +157,7 @@ public class PlayerState(byte playerId)
         {
             case CustomRoles.Bloodlust:
                 countTypes = CountTypes.Bloodlust;
+                SubRoles.Remove(CustomRoles.Stressed);
                 break;
             case CustomRoles.Madmate:
                 TaskState.hasTasks = false;
@@ -167,6 +175,8 @@ public class PlayerState(byte playerId)
                 SubRoles.Remove(CustomRoles.Rascal);
                 SubRoles.Remove(CustomRoles.Loyal);
                 SubRoles.Remove(CustomRoles.Undead);
+                SubRoles.Remove(CustomRoles.Stressed);
+                Utils.NotifyRoles(SpecifyTarget: Player);
                 break;
             case CustomRoles.Charmed:
                 TaskState.hasTasks = false;
@@ -184,6 +194,8 @@ public class PlayerState(byte playerId)
                 SubRoles.Remove(CustomRoles.Rascal);
                 SubRoles.Remove(CustomRoles.Loyal);
                 SubRoles.Remove(CustomRoles.Undead);
+                SubRoles.Remove(CustomRoles.Stressed);
+                Utils.NotifyRoles(SpecifyTarget: Player);
                 break;
             case CustomRoles.Undead:
                 TaskState.hasTasks = false;
@@ -201,6 +213,8 @@ public class PlayerState(byte playerId)
                 SubRoles.Remove(CustomRoles.Rascal);
                 SubRoles.Remove(CustomRoles.Loyal);
                 SubRoles.Remove(CustomRoles.Charmed);
+                SubRoles.Remove(CustomRoles.Stressed);
+                Utils.NotifyRoles(SpecifyTarget: Player);
                 break;
             case CustomRoles.LastImpostor:
                 SubRoles.Remove(CustomRoles.Mare);
@@ -222,6 +236,7 @@ public class PlayerState(byte playerId)
                 SubRoles.Remove(CustomRoles.Loyal);
                 SubRoles.Remove(CustomRoles.Loyal);
                 SubRoles.Remove(CustomRoles.Undead);
+                Utils.NotifyRoles(SpecifyTarget: Player);
                 break;
             case CustomRoles.Contagious:
                 TaskState.hasTasks = false;
@@ -239,6 +254,8 @@ public class PlayerState(byte playerId)
                 SubRoles.Remove(CustomRoles.Rascal);
                 SubRoles.Remove(CustomRoles.Loyal);
                 SubRoles.Remove(CustomRoles.Undead);
+                SubRoles.Remove(CustomRoles.Stressed);
+                Utils.NotifyRoles(SpecifyTarget: Player);
                 break;
         }
     }
@@ -269,7 +286,7 @@ public class PlayerState(byte playerId)
     public void InitTask(PlayerControl player) => taskState.Init(player);
     public void UpdateTask(PlayerControl player) => taskState.Update(player);
 
-    public byte GetRealKiller() => IsDead && RealKiller.TIMESTAMP != DateTime.MinValue ? RealKiller.ID : byte.MaxValue;
+    public byte GetRealKiller() => IsDead && RealKiller.TimeStamp != DateTime.MinValue ? RealKiller.ID : byte.MaxValue;
     public int GetKillCount(bool ExcludeSelfKill = false) => Main.PlayerStates.Values.Where(state => !(ExcludeSelfKill && state.PlayerId == PlayerId) && state.GetRealKiller() == PlayerId).ToArray().Length;
 }
 
